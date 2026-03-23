@@ -597,6 +597,26 @@
   .vscode-dl-link { font-size: clamp(14px, 1.5vw, 18px); color: #c97b63; text-decoration: none; border-bottom: 1px solid #c97b63; padding-bottom: 2px; }
   .vscode-dl-link:hover { opacity: 0.75; }
 
+  /* ── SLIDES EXTENSIONS ── */
+  .slide-ext { flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px 60px 90px; }
+  .ext-title { font-size: clamp(20px, 2.4vw, 34px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .ext-sub { font-size: clamp(13px, 1.4vw, 18px); font-weight: 300; color: #c97b63; text-align: center; }
+  .ext-img { max-height: 40vh; max-width: 84vw; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+  .ext-step-text { font-size: clamp(14px, 1.6vw, 22px); font-weight: 400; color: #333; text-align: center; }
+  .ext-step-text em { font-style: normal; font-family: monospace; background: #f3ede8; padding: 2px 8px; border-radius: 4px; }
+
+  /* ── SLIDE VSCODE-INTRO — היכרות עם VS Code ── */
+  .slide-vscode-intro { flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 32px 60px 90px; }
+  .vscode-intro-title { font-size: clamp(24px, 3vw, 40px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .vscode-intro-sub { font-size: clamp(14px, 1.6vw, 20px); font-weight: 300; color: #555; text-align: center; }
+  .vscode-intro-img-wrap { position: relative; display: inline-block; }
+  .vscode-intro-img-wrap img { max-height: 42vh; max-width: 85vw; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); display: block; }
+  .vscode-intro-arrow { position: absolute; top: 12%; left: 18%; display: flex; flex-direction: row; align-items: center; gap: 0; }
+  .vscode-intro-arrow-label { display: none; }
+  .vscode-intro-arrow-line { height: 2px; width: 40px; background: #c97b63; }
+  .vscode-intro-arrow-tip { width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 12px solid #c97b63; }
+  .vscode-intro-body { font-size: clamp(12px, 1.3vw, 16px); font-weight: 300; color: #777; text-align: center; line-height: 1.7; max-width: 680px; }
+
   /* ── SLIDE 14 — Terminal vs VS Code ── */
   .slide-14 { flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 48px 80px; }
   .s14-supertitle { font-size: 13px; font-weight: 700; color: #c97b63; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
@@ -1232,6 +1252,43 @@
     <div class="vscode-dl-sub">עורך הקוד החינמי של Microsoft.</div>
     <div class="vscode-dl-steps">נכנסות, מורידות, מתקינות. זהו.</div>
     <a class="vscode-dl-link" href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a>
+  </div>
+
+  <!-- SLIDE VSCODE-INTRO — היכרות עם VS Code -->
+  <div class="slide slide-vscode-intro">
+    <div class="vscode-intro-title">נעים מאוד, VS Code.</div>
+    <div class="vscode-intro-sub">נלמד לאט. הצעד הראשון — פתיחת תיקייה.</div>
+    <div class="vscode-intro-img-wrap">
+      <img src="תמונות/vscode_welcome_arrow.png" alt="VS Code welcome screen">
+    </div>
+    <div class="vscode-intro-body">כי התיקייה היא הגבול שנותנות לקלוד.<br>הוא עובד רק בפנים — לא יוצא, לא מציץ, לא נוגע בשום דבר אחר.<br>מכאן בונות את כל הפרויקטים. מסודר. מבוקר. שלכן.</div>
+  </div>
+
+  <!-- SLIDE EXT-1: כותרת + אייקון תוספים -->
+  <div class="slide slide-ext">
+    <div class="ext-title">עוד כמה קליקים וקלוד כבר בפנים.</div>
+    <div class="ext-sub">(תהיו חזקות, אנחנו כמעט שם!!)</div>
+    <img src="תמונות/1.png" alt="Extensions icon" class="ext-img">
+    <div class="ext-step-text">לוחצות על אייקון התוספים — הריבועים בצד. כן, אלה.</div>
+  </div>
+
+  <!-- SLIDE EXT-2: חיפוש -->
+  <div class="slide slide-ext">
+    <img src="תמונות/2.png" alt="Search claude code" class="ext-img">
+    <div class="ext-step-text">מקלידות <em>claude code</em> — בדיוק ככה, בלי קישוטים.</div>
+  </div>
+
+  <!-- SLIDE EXT-3: התקנה -->
+  <div class="slide slide-ext">
+    <img src="תמונות/3.png" alt="Install Claude Code" class="ext-img">
+    <div class="ext-step-text">יש שם כמה. שימו לב לקחת את הנכון של Anthropic.</div>
+    <div class="ext-note">אם קופצת הודעה "Trust Publisher" — אל דאגה, זה נורמלי. לוחצות אישור וממשיכות.</div>
+  </div>
+
+  <!-- SLIDE EXT-4: אייקון קלוד למעלה -->
+  <div class="slide slide-ext">
+    <img src="תמונות/4.png" alt="Claude Code icon" class="ext-img">
+    <div class="ext-step-text">הלוגו הכתום מופיע למעלה. זה הסימן שקלוד בפנים.</div>
   </div>
 
 <!-- Navigation -->
