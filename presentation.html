@@ -25,6 +25,9 @@
     position: relative;
   }
 
+  /* ── GLOBAL — תמונות בלי רקע לבן ── */
+  .slide img { mix-blend-mode: multiply; }
+
   /* ── SLIDE ── */
   .slide {
     position: absolute;
@@ -118,11 +121,9 @@
     line-height: 1.8;
   }
   .slide-2 img {
-    height: 260px;
-  }
-  .slide-2 img {
     height: 320px;
     width: auto;
+    mix-blend-mode: multiply;
     object-fit: contain;
     filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
     mix-blend-mode: multiply;
@@ -235,6 +236,17 @@
     font-style: italic;
     margin-top: 8px;
   }
+
+  /* ── SLIDE SAFETY — כללי זהירות ── */
+  .slide-safety { flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 32px 80px 80px; overflow: hidden; }
+  .safety-title { font-size: clamp(28px, 3.2vw, 46px); font-weight: 900; color: #1a1a1a; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .safety-sub { font-size: clamp(12px, 1.2vw, 16px); font-weight: 300; color: #c97b63; text-align: center; width: 100%; margin-bottom: 6px; position: relative; z-index: 1; }
+  .safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px; max-width: 780px; width: 100%; position: relative; z-index: 1; }
+  .safety-item { font-size: clamp(12px, 1.15vw, 15px); font-weight: 400; color: #333; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .safety-item .num { color: #c97b63; font-weight: 700; flex-shrink: 0; }
+  .safety-footer { font-size: clamp(12px, 1.2vw, 16px); font-weight: 700; color: #1a1a1a; text-align: center; margin-top: 8px; line-height: 1.8; position: relative; z-index: 1; }
+  .safety-footer span { color: #c97b63; }
+  .safety-raccoon { position: absolute; width: 200px; bottom: 40px; left: 30px; opacity: 0.6; pointer-events: none; mix-blend-mode: multiply; }
 
   /* ── SLIDE 5 — fluffy helper ── */
   .slide-5 { flex-direction: row; align-items: center; justify-content: center; gap: 80px; padding: 80px 120px; }
@@ -597,6 +609,39 @@
   .vscode-dl-link { font-size: clamp(14px, 1.5vw, 18px); color: #c97b63; text-decoration: none; border-bottom: 1px solid #c97b63; padding-bottom: 2px; }
   .vscode-dl-link:hover { opacity: 0.75; }
 
+  /* ── SLIDE BYE ── */
+  .slide-bye { flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+  .bye-title { font-size: clamp(40px, 5.5vw, 76px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .bye-img { height: clamp(220px, 28vh, 360px); width: auto; }
+
+  /* ── SLIDE OUTRO — זה מה שיצא ── */
+  .slide-outro { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 60px 80px 90px; }
+  .outro-text { display: flex; flex-direction: column; gap: 20px; max-width: 420px; flex-shrink: 0; }
+  .outro-title { font-size: clamp(28px, 3.2vw, 46px); font-weight: 900; color: #1a1a1a; line-height: 1.2; }
+  .outro-sub { font-size: clamp(14px, 1.5vw, 20px); font-weight: 300; color: #c97b63; line-height: 1.6; }
+  .outro-next { font-size: clamp(12px, 1.2vw, 16px); font-weight: 400; color: #555; line-height: 1.8; border-right: 3px solid #e8d8ce; padding-right: 14px; }
+  .outro-group { font-size: clamp(12px, 1.2vw, 16px); font-weight: 400; color: #333; line-height: 1.8; }
+  .outro-group strong { color: #c97b63; font-weight: 700; }
+  .outro-preview { flex-shrink: 0; width: 340px; height: 430px; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.13); position: relative; }
+  .outro-preview iframe { width: 720px; height: 910px; border: none; transform: scale(0.472); transform-origin: top right; pointer-events: none; }
+
+  /* ── SLIDE PROMPT ── */
+  .slide-prompt { flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 32px 60px 90px; }
+  .prompt-tag { font-size: 12px; font-weight: 700; color: #c97b63; letter-spacing: 0.14em; text-transform: uppercase; }
+  .prompt-box { background: #f9f4f0; border: 1.5px solid #e8d8ce; border-radius: 14px; padding: 20px 28px; max-width: 740px; width: 100%; max-height: 42vh; overflow-y: auto; text-align: right; direction: rtl; font-size: clamp(11px, 1.2vw, 15px); font-family: 'Heebo', sans-serif; color: #333; line-height: 1.8; white-space: pre-wrap; }
+  .prompt-copy-btn { background: #c97b63; color: white; border: none; border-radius: 30px; padding: 10px 32px; font-size: clamp(13px, 1.3vw, 17px); font-family: 'Heebo', sans-serif; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+  .prompt-copy-btn:hover { opacity: 0.85; }
+  .prompt-copy-btn.copied { background: #7aaa7a; }
+
+  /* ── SLIDE MISSION ── */
+  .slide-mission { flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 40px 180px 90px; overflow: hidden; }
+  .mission-title { font-size: clamp(32px, 4vw, 56px); font-weight: 900; color: #1a1a1a; text-align: center; width: 100%; line-height: 1.2; position: relative; z-index: 1; }
+  .mission-subtitle { font-size: clamp(16px, 1.8vw, 26px); font-weight: 700; color: #c97b63; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .mission-body { font-size: clamp(12px, 1.1vw, 15px); font-weight: 300; color: #555; text-align: center; line-height: 1.9; max-width: 640px; width: 100%; position: relative; z-index: 1; }
+  .mission-hint { font-size: clamp(12px, 1.1vw, 15px); color: #c97b63; font-weight: 400; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .mission-creature { position: absolute; opacity: 0.55; pointer-events: none; }
+  .mission-creature-1 { width: 240px; bottom: 40px; left: 40px; }
+
   /* ── SLIDES EXTENSIONS ── */
   .slide-ext { flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px 60px 90px; }
   .ext-title { font-size: clamp(20px, 2.4vw, 34px); font-weight: 900; color: #1a1a1a; text-align: center; }
@@ -936,6 +981,23 @@
       </ul>
     </div>
     <img src="תמונות/fluffy_helper.png" alt="Fluffy Helper">
+  </div>
+
+  <!-- SLIDE SAFETY — כללי זהירות -->
+  <div class="slide slide-safety">
+    <img src="תמונות/preview_raccoon.png" class="safety-raccoon" alt="">
+    <div class="safety-title">כללי זהירות</div>
+    <div class="safety-sub">או: איך לא להפוך את שיעור ההיכרות לאירוע תמיכה טכנית</div>
+    <div class="safety-grid">
+      <div class="safety-item"><span class="num">①</span><span>שלב שלב. לא שולחות אותו למשימה עצמאית כאילו הוא כבר מכיר את המשפחה</span></div>
+      <div class="safety-item"><span class="num">②</span><span>לא מתקינות דברים שלא ברור מה הם. מסתורי — זה עדיין לא אישיות</span></div>
+      <div class="safety-item"><span class="num">③</span><span>לא נוגעות בקבצים חשובים. לא נוגעות בלב הפתוח של העסק ביום הראשון</span></div>
+      <div class="safety-item"><span class="num">④</span><span>מתחילות בתיקיית תרגול נקייה. מקום שאפשר לטעות בו בלי להזיע</span></div>
+      <div class="safety-item"><span class="num">⑤</span><span>לא מאשרות כל דבר מתוך אמון עיוור. כריזמה היא לא מדיניות אבטחה</span></div>
+      <div class="safety-item"><span class="num">⑥</span><span>אם משהו לא ברור — עוצרות ושואלות. לא מהנהנות לטרמינל בנימוס ומקווות לטוב</span></div>
+      <div class="safety-item"><span class="num">⑦</span><span>זה כלי חזק. לא קסם קטן וחמוד בלי השלכות</span></div>
+    </div>
+    <div class="safety-footer">סקרנות, בהחלט.<br><span>הרפתקנות עם הרשאות — קצת פחות.</span></div>
   </div>
 
   <!-- SLIDE INSTALL INTRO — מתקינות את קלוד קוד -->
@@ -1291,6 +1353,77 @@
     <div class="ext-step-text">הלוגו הכתום מופיע למעלה. זה הסימן שקלוד בפנים.</div>
   </div>
 
+  <!-- SLIDE MISSION — המשימה הראשונה -->
+  <div class="slide slide-mission">
+    <img src="תמונות/preview_unicorn_monkey.png" class="mission-creature mission-creature-1" alt="">
+    <div class="mission-title">המשימה הראשונה שלכם</div>
+    <div class="mission-subtitle">לבקש מקלוד לבנות לכן דף שבועי קטן ב־HTML.</div>
+    <div class="mission-body">
+      כן כן, ממש דף אמיתי שאפשר לפתוח בדפדפן ולהרגיש לרגע האקריות עם טעם טוב.<br><br>
+      הרעיון הוא לא להסתבך, אלא לראות כמה מהר אפשר להפוך כמה שורות של טקסט למשהו ויזואלי, מסודר ויפה.<br><br>
+      אתן פשוט נותנות לו כותרת, כמה משימות לשבוע, אולי שורה קטנה של הערה או מוטו — והוא בונה לכן עמוד קטן וחמוד.<br><br>
+      זאת משימה מעולה להתחלה כי היא גם פשוטה, גם מספקת, וגם מראה לכן מיד שקלוד לא רק "מדבר" — אלא ממש יוצר איתכן משהו שאפשר לראות בעיניים.
+    </div>
+    <div class="mission-hint">הפרומפט המלא — בסלייד הבא ←</div>
+  </div>
+
+  <!-- SLIDE PROMPT — הפרומפט להעתקה -->
+  <div class="slide slide-prompt">
+    <div class="prompt-tag">הפרומפט — העתיקו והתאימו</div>
+    <div class="prompt-box" id="promptText">היי קלוד, זו הפעם הראשונה שלי עם Claude Code ואני מתחילה.
+
+אני רוצה שתיצור לי דף HTML פשוט, יפה ונעים לעין, שמציג את התכנון שלי לשבוע.
+חשוב לי שזה יהיה ברור, מסודר, ועם עיצוב נעים אבל לא מסובך מדי.
+
+תשתמש בתוכן הבא:
+
+כותרת: [כאן לכתוב כותרת]
+כותרת משנה: [כאן לכתוב כותרת משנה]
+
+סגנון ויזואלי: [מינימליסטי / צבעוני / חלומי / אלגנטי / playful]
+(אפשר גם לתאר בחופשי — "משהו עם פרחים", "כחול ים", "כמו ניוזלטר יפה")
+
+המשימות שלי לשבוע:
+- [משימה 1]
+- [משימה 2]
+- [משימה 3]
+- [משימה 4]
+- [משימה 5]
+
+הערה קטנה בתחתית:
+[כאן לכתוב הערה אם רוצים]
+
+בבקשה:
+- תיצור את הכל בתוך קובץ HTML אחד בלבד
+- תוסיף CSS פשוט בתוך אותו קובץ
+- תשמור על עיצוב יפה, ברור וידידותי
+- תשמור את הקובץ בשם week.html
+- אחרי שאתה יוצר את הקובץ, תסביר לי במילים פשוטות מה יצרת
+- תכתוב לי בדיוק איך לפתוח את הקובץ בדפדפן
+
+תניח שאני לא יודעת קוד בכלל.</div>
+    <button class="prompt-copy-btn" onclick="copyPrompt(this)">העתיקי את הפרומפט</button>
+  </div>
+
+  <!-- SLIDE OUTRO — זה מה שיצא -->
+  <div class="slide slide-outro">
+    <div class="outro-text">
+      <div class="outro-title">זה מה שיצא.</div>
+      <div class="outro-sub">הכלי אותו כלי. התוצאה — זה כבר אתן.</div>
+      <div class="outro-next">בשיעורים הבאים נלמד לבקש יותר, לדייק יותר, ולהפתיע את עצמנו יותר מאשר הפעם.</div>
+      <div class="outro-group">קבוצת קלוד החתיך פתוחה (סתם, קלאב קלוד) — לשאלות, לצחוקים, ולכל מה שיצא לכן מהמשימה הראשונה.<br><strong>באמת, תשתפו. זה הבית.</strong></div>
+    </div>
+    <div class="outro-preview">
+      <iframe src="תמונות/שבוע-אלה.html" scrolling="no" title="דוגמת פלט"></iframe>
+    </div>
+  </div>
+
+  <!-- SLIDE BYE -->
+  <div class="slide slide-bye">
+    <img src="תמונות/preview_bye_creature.png" class="bye-img" alt="">
+    <div class="bye-title">נתראה בשיעור הבא.</div>
+  </div>
+
 <!-- Navigation -->
 <div class="nav">
   <button onclick="prev()">הקודם</button>
@@ -1311,6 +1444,15 @@
 
   function next() { show(current + 1); }
   function prev() { show(current - 1); }
+
+  function copyPrompt(btn) {
+    const text = document.getElementById('promptText').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ הועתק!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'העתיקי את הפרומפט'; btn.classList.remove('copied'); }, 2500);
+    });
+  }
 
   document.getElementById('counter').textContent = `1 / ${slides.length}`;
 

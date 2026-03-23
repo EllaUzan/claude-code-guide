@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>המשימות של אלה 🌀</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #d4a5f5 55%, #a8edea 100%);
+      background-attachment: fixed;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 32px;
+      padding: 32px 40px 28px;
+      max-width: 680px;
+      width: 100%;
+      box-shadow: 0 20px 80px rgba(180, 120, 200, 0.2), 0 4px 24px rgba(0,0,0,0.06);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .top-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #f093fb, #f5576c);
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #2d1b69;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #8a7aa0;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 10px 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: default;
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .task-item:hover {
+      transform: translateX(-4px);
+      box-shadow: 0 8px 28px rgba(180, 120, 200, 0.18);
+    }
+
+    .emoji {
+      font-size: 1.35rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .task-text {
+      font-size: 1rem;
+      color: #3d2c6e;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .footer-box {
+      margin-top: 20px;
+      background: linear-gradient(135deg, rgba(168, 237, 234, 0.4), rgba(212, 165, 245, 0.35));
+      border-radius: 20px;
+      padding: 14px 20px;
+      border: 1px dashed rgba(180, 120, 200, 0.4);
+    }
+
+    .footer-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #a78bbc;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .footer-text {
+      font-size: 0.93rem;
+      color: #5a4080;
+      line-height: 1.6;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .bottom-line {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #c0aad8;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="top-badge">🗓 שבוע הקרוב · 2026</div>
+
+    <h1>המשימות של אלה<br>לשבוע הקרוב</h1>
+    <p class="subtitle">בין אזעקה לזום, גם זה סוג של ניהול זמן</p>
+
+    <ul class="task-list">
+      <li class="task-item">
+        <span class="emoji">🎤</span>
+        <span class="task-text">להכין מצגת ללייב של השבט</span>
+      </li>
+      <li class="task-item">
+        <span class="emoji">🤖</span>
+        <span class="task-text">להכין את השיעור השני של קלוד קוד</span>
+      </li>
+      <li class="task-item">
+        <span class="emoji">🪟</span>
+        <span class="task-text">לפתוח 17 טאבים חדשים ולהעמיד פנים שזה סדר</span>
+      </li>
+      <li class="task-item">
+        <span class="emoji">🛑</span>
+        <span class="task-text">לנסות לא לפתח קשר רגשי עם עוד כלי AI</span>
+      </li>
+      <li class="task-item">
+        <span class="emoji">🥗</span>
+        <span class="task-text">לאכול משהו שהוא לא חטיף בעמידה מול המחשב</span>
+      </li>
+
+      <li class="task-item">
+        <span class="emoji">🧠</span>
+        <span class="task-text">לזכור שאני בן אדם ולא מערכת אוטומציות עם שיער</span>
+      </li>
+    </ul>
+
+    <div class="footer-box">
+      <div class="footer-label">📌 הערה לסיום</div>
+      <div class="footer-text">אם אפשר שהעמוד ייתן תחושה שהחיים בשליטה, גם אם זה שקר עיצובי מוחלט, זה יהיה נהדר.</div>
+    </div>
+
+    <div class="bottom-line">✦ made with claude · for ella · who is definitely not a system ✦</div>
+
+  </div>
+
+</body>
+</html>
