@@ -633,6 +633,15 @@
   .prompt-copy-btn:hover { opacity: 0.85; }
   .prompt-copy-btn.copied { background: #7aaa7a; }
 
+  /* ── SLIDE LOGIN ── */
+  .slide-login { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 90px; }
+  .login-text { display: flex; flex-direction: column; gap: 14px; max-width: 340px; }
+  .login-title { font-size: clamp(26px, 3vw, 42px); font-weight: 900; color: #1a1a1a; line-height: 1.2; }
+  .login-body { font-size: clamp(13px, 1.3vw, 17px); font-weight: 300; color: #555; line-height: 1.8; }
+  .login-cta { font-size: clamp(14px, 1.4vw, 19px); font-weight: 700; color: #c97b63; }
+  .login-mockup-wrap { width: 420px; height: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.18); flex-shrink: 0; position: relative; }
+  .login-mockup-wrap iframe { width: 860px; height: 580px; border: none; transform: scale(0.488); transform-origin: top left; }
+
   /* ── SLIDE MISSION ── */
   .slide-mission { flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 40px 180px 90px; overflow: hidden; }
   .mission-title { font-size: clamp(32px, 4vw, 56px); font-weight: 900; color: #1a1a1a; text-align: center; width: 100%; line-height: 1.2; position: relative; z-index: 1; }
@@ -893,6 +902,73 @@
     font-size: 12px;
     color: #ccc;
     letter-spacing: 0.1em;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 680px) {
+    .slide { padding: 24px 20px 80px; overflow-y: auto; align-items: flex-start; justify-content: flex-start; flex-direction: column !important; gap: 20px !important; }
+
+    /* Row layouts → column */
+    .slide-2, .slide-4, .slide-5, .slide-install-intro,
+    .slide-9, .slide-login, .slide-outro, .slide-7 .s7-cols { flex-direction: column !important; gap: 24px !important; }
+
+    /* Images - smaller */
+    .slide img, .slide-2 img, .slide-4 img, .slide-5 img,
+    .slide-install-intro img, .slide-9 img { height: 160px !important; width: auto; align-self: center; }
+    .bye-img { height: 180px !important; }
+    .character img { height: 160px !important; }
+
+    /* Characters side by side → wrap */
+    .characters { gap: 24px !important; flex-wrap: wrap; }
+
+    /* Safety grid → 1 col */
+    .safety-grid { grid-template-columns: 1fr !important; }
+    .safety-raccoon { display: none; }
+    .slide-safety { padding: 24px 20px 80px !important; }
+
+    /* OS split → column */
+    .os-split { flex-direction: column !important; gap: 16px !important; }
+    .os-card { padding: 20px 24px !important; }
+
+    /* Slide 7 cols → column */
+    .s7-cols { flex-direction: column !important; }
+    .s7-col { padding: 0 !important; }
+    .s7-divider { display: none; }
+    .slide-7 { padding: 24px 20px 80px !important; }
+
+    /* Slide 8 */
+    .slide-8 { padding: 24px 20px 80px !important; }
+
+    /* Outro preview → hide iframe */
+    .outro-preview { display: none; }
+    .outro-text { max-width: 100% !important; }
+
+    /* Login mockup */
+    .login-mockup-wrap { display: none; }
+    .login-text { max-width: 100% !important; }
+
+    /* Mission */
+    .slide-mission { padding: 24px 20px 80px !important; }
+
+    /* Slide 10 */
+    .slide-10 { padding: 24px 20px 80px !important; }
+
+    /* Prompt */
+    .slide-prompt { padding: 24px 20px 80px !important; }
+    .prompt-box { max-height: 55vh; font-size: 13px !important; }
+
+    /* Nav buttons - bigger touch targets */
+    .nav button { padding: 12px 28px; font-size: 15px; }
+    .nav { gap: 20px; }
+
+    /* Slide number */
+    .slide-number { display: none; }
+
+    /* Slide 4/5 text max-width */
+    .typo-slide, .partner-text, .install-intro-text, .s9-content { max-width: 100% !important; }
+
+    /* Handwritten note */
+    .handwritten-note { position: relative; bottom: auto; left: auto; }
   }
 </style>
 </head>
