@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 860px;
+    height: 580px;
+    background: #1e1e1e;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 48px;
+    background: #2c2c2c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 8px;
+    gap: 16px;
+    border-right: 1px solid #3a3a3a;
+  }
+  .sidebar-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #858585;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .sidebar-icon.active { color: #cccccc; }
+
+  /* File panel */
+  .filepanel {
+    width: 220px;
+    background: #252526;
+    border-right: 1px solid #3a3a3a;
+    padding: 8px 0;
+  }
+  .filepanel-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #bbb;
+    padding: 4px 12px 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .filepanel-section {
+    font-size: 12px;
+    color: #ccc;
+    padding: 3px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .filepanel-section .arrow { color: #888; font-size: 10px; }
+  .filepanel-sub {
+    font-size: 12px;
+    color: #ccc;
+    padding: 3px 12px 3px 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .claude-icon { color: #e8784c; font-size: 14px; }
+
+  /* Main area */
+  .main {
+    flex: 1;
+    background: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Tab bar */
+  .tabbar {
+    height: 35px;
+    background: #252526;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #3a3a3a;
+  }
+  .tab {
+    height: 35px;
+    padding: 0 16px;
+    background: #1e1e1e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #cccccc;
+    border-right: 1px solid #3a3a3a;
+  }
+  .tab-close {
+    color: #888;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* Content panel */
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 40px;
+    overflow: hidden;
+  }
+
+  .login-card {
+    width: 480px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 32px 36px 28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .pixel-art {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 2px;
+  }
+
+  /* Simple pixel claude mascot */
+  canvas {
+    image-rendering: pixelated;
+  }
+
+  .login-desc {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .login-question {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 14px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 13px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .btn-primary {
+    background: #e8784c;
+    color: white;
+  }
+  .btn-secondary {
+    background: #2c2c2c;
+    color: white;
+  }
+  .btn-desc {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 12px;
+    padding: 0 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-icon">📄</div>
+  <div class="sidebar-icon">🔍</div>
+  <div class="sidebar-icon">⑂</div>
+  <div class="sidebar-icon">▷</div>
+  <div class="sidebar-icon active">⊞</div>
+  <div class="sidebar-icon">◎</div>
+  <div class="sidebar-icon">✦</div>
+  <div class="sidebar-icon active" style="color:#e8784c;">✳</div>
+</div>
+
+<div class="filepanel">
+  <div class="filepanel-title">Explorer ···</div>
+  <div class="filepanel-section">
+    <span class="arrow">▼</span> OPEN EDITORS
+  </div>
+  <div class="filepanel-sub">
+    <span style="color:#888;font-size:11px;">✕</span>
+    <span class="claude-icon">✳</span> Claude Code
+  </div>
+  <div class="filepanel-section">
+    <span class="arrow">▶</span> PROGRAMS DEMO
+  </div>
+</div>
+
+<div class="main">
+  <div class="tabbar">
+    <div class="tab">
+      <span style="color:#e8784c;">✳</span>
+      Claude Code
+      <span class="tab-close">✕</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="login-card">
+      <!-- Pixel art area -->
+      <div style="text-align:center; margin-bottom:18px;">
+        <canvas id="mascot" width="120" height="90"></canvas>
+      </div>
+
+      <p class="login-desc">
+        Claude Code can be used with your Claude subscription or billed based on API usage through your Console account.
+      </p>
+      <p class="login-question">How do you want to log in?</p>
+
+      <button class="btn btn-primary">Claude.ai Subscription</button>
+      <p class="btn-desc">Use your Claude Pro, Team, or Enterprise subscription</p>
+
+      <button class="btn btn-secondary">Anthropic Console</button>
+      <p class="btn-desc">Pay for API usage through your Console account</p>
+
+      <button class="btn btn-secondary" style="background:#333;">Bedrock, Foundry, or Vertex ↗</button>
+      <p class="btn-desc" style="margin-bottom:0;">Instructions on how to use API keys or third-party providers.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// Draw simple pixel art mascot
+const canvas = document.getElementById('mascot');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+// Pixel art: simple orange character with star eyes
+const pixels = [
+  [0,0,0,1,1,1,1,0,0,0],
+  [0,0,1,1,1,1,1,1,0,0],
+  [0,1,1,0,1,1,0,1,1,0],
+  [0,1,1,1,1,1,1,1,1,0],
+  [0,0,1,0,1,1,0,1,0,0],
+  [0,0,1,1,1,1,1,1,0,0],
+  [0,1,1,1,1,1,1,1,1,0],
+  [0,1,1,0,0,0,0,1,1,0],
+  [0,1,0,0,0,0,0,0,1,0],
+];
+
+const scale = 9;
+ctx.fillStyle = '#e8784c';
+pixels.forEach((row, y) => {
+  row.forEach((cell, x) => {
+    if (cell) ctx.fillRect(x * scale + 15, y * scale + 5, scale, scale);
+  });
+});
+</script>
+
+</body>
+</html>

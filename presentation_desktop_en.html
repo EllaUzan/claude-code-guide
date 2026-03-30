@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code — A Guide for Beginners</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f2ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  /* ── GLOBAL — images without white background ── */
+  .slide img { mix-blend-mode: multiply; }
+
+  /* ── SLIDE ── */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 60px 100px;
+    background: #ffffff;
+  }
+  .slide.active { display: flex; }
+
+  /* ── SLIDE 1 — title ── */
+  .slide-1 {
+    flex-direction: column;
+    gap: 12px;
+    background: #ffffff;
+  }
+  .slide-1 .eyebrow {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+  .slide-1 h1 {
+    font-size: clamp(48px, 7vw, 90px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.05;
+  }
+  .slide-1 h1 span { color: #c97b63; }
+  .slide-1 .subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: #888;
+    margin-top: 8px;
+  }
+
+  /* ── SLIDE 2 — definition ── */
+  .slide-2 {
+    flex-direction: row;
+    gap: 80px;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide-2 .definition-text {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .slide-2 .definition-text h2 {
+    font-size: clamp(22px, 2.8vw, 36px);
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.4;
+  }
+  .slide-2 .def-title {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 900;
+    color: #1a1a1a;
+  }
+  .slide-2 .def-question {
+    font-size: 16px;
+    font-weight: 400;
+    color: #aaa;
+    letter-spacing: 0.05em;
+  }
+  .slide-2 h2 {
+    font-size: clamp(17px, 2vw, 24px);
+    font-weight: 400;
+    color: #444;
+    line-height: 1.6;
+  }
+  .slide-2 .def-punch {
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 700;
+    color: #c97b63;
+  }
+  .slide-2 .definition-text .wink {
+    font-size: 14px;
+    font-weight: 300;
+    color: #bbb;
+    font-style: italic;
+  }
+  .slide-2 .def-body {
+    font-size: clamp(14px, 1.6vw, 18px);
+    font-weight: 300;
+    color: #888;
+    line-height: 1.8;
+  }
+  .slide-2 img {
+    height: 320px;
+    width: auto;
+    mix-blend-mode: multiply;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+  }
+
+  /* ── SLIDE 3 — two characters ── */
+  .slide-3 {
+    flex-direction: column;
+    gap: 48px;
+  }
+  .slide-3 .top-text {
+    text-align: center;
+    max-width: 680px;
+  }
+  .slide-3 .top-text h2 {
+    font-size: clamp(26px, 3.5vw, 42px);
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+  .slide-3 .top-text h2 span { color: #c97b63; }
+
+  .characters {
+    display: flex;
+    gap: 80px;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .character {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .character img {
+    height: 280px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.08));
+    mix-blend-mode: multiply;
+    transition: transform 0.3s ease;
+  }
+  .character img:hover { transform: translateY(-6px); }
+
+  .character-label {
+    text-align: center;
+  }
+  .character-label .name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .character-label .desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: #999;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .vs-divider {
+    font-size: 13px;
+    font-weight: 400;
+    color: #ccc;
+    letter-spacing: 0.15em;
+    padding-bottom: 80px;
+  }
+
+  /* ── SLIDE 4 — with image ── */
+  .slide-4 { flex-direction: row; align-items: center; justify-content: center; gap: 80px; padding: 80px 120px; }
+  .slide-4 img {
+    height: 320px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    flex-shrink: 0;
+    mix-blend-mode: multiply;
+  }
+  .typo-slide { display: flex; flex-direction: column; gap: 32px; max-width: 520px; }
+  .typo-title {
+    font-size: clamp(32px, 4.5vw, 58px);
+    font-weight: 900;
+    color: #1a1a1a;
+  }
+  .typo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .typo-list li {
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 300;
+    color: #444;
+    padding-left: 24px;
+    position: relative;
+  }
+  .typo-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: #c97b63;
+  }
+  .typo-wink {
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 400;
+    color: #bbb;
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  /* ── SLIDE SAFETY ── */
+  .slide-safety { flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 32px 80px 80px; overflow: hidden; }
+  .safety-title { font-size: clamp(28px, 3.2vw, 46px); font-weight: 900; color: #1a1a1a; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .safety-sub { font-size: clamp(12px, 1.2vw, 16px); font-weight: 300; color: #c97b63; text-align: center; width: 100%; margin-bottom: 6px; position: relative; z-index: 1; }
+  .safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px; max-width: 780px; width: 100%; position: relative; z-index: 1; }
+  .safety-item { font-size: clamp(12px, 1.15vw, 15px); font-weight: 400; color: #333; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .safety-item .num { color: #c97b63; font-weight: 700; flex-shrink: 0; }
+  .safety-footer { font-size: clamp(12px, 1.2vw, 16px); font-weight: 700; color: #1a1a1a; text-align: center; margin-top: 8px; line-height: 1.8; position: relative; z-index: 1; }
+  .safety-footer span { color: #c97b63; }
+  .safety-raccoon { position: absolute; width: 200px; bottom: 40px; right: 30px; opacity: 0.6; pointer-events: none; mix-blend-mode: multiply; }
+
+  /* ── SLIDE 5 — fluffy helper ── */
+  .slide-5 { flex-direction: row; align-items: center; justify-content: center; gap: 80px; padding: 80px 120px; }
+  .slide-5 img {
+    height: 340px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    flex-shrink: 0;
+    mix-blend-mode: multiply;
+  }
+  .slide-5 .partner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 480px;
+  }
+  .slide-5 .partner-title {
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+  .slide-5 .partner-body {
+    font-size: clamp(15px, 1.8vw, 20px);
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+  }
+  .slide-5 .partner-label {
+    font-size: clamp(13px, 1.4vw, 16px);
+    font-weight: 400;
+    color: #aaa;
+    letter-spacing: 0.05em;
+  }
+  .slide-5 .partner-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .slide-5 .partner-list li {
+    font-size: clamp(17px, 2vw, 24px);
+    font-weight: 300;
+    color: #444;
+    padding-left: 24px;
+    position: relative;
+  }
+  .slide-5 .partner-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: #c97b63;
+  }
+
+  /* ── SLIDE INSTALL INTRO ── */
+  .slide-install-intro { flex-direction: row; align-items: center; justify-content: center; gap: 72px; padding: 60px 100px; }
+  .slide-install-intro img {
+    height: 360px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    flex-shrink: 0;
+    mix-blend-mode: multiply;
+  }
+  .install-intro-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 500px;
+  }
+  .install-intro-title {
+    font-size: clamp(32px, 4vw, 54px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.15;
+  }
+  .install-intro-sub {
+    font-size: clamp(16px, 1.8vw, 22px);
+    font-weight: 300;
+    color: #888;
+    line-height: 1.6;
+  }
+  .install-intro-terminal {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 24px;
+    background: #f7f4f1;
+    border-radius: 12px;
+    border-left: 3px solid #c97b63;
+  }
+  .install-intro-terminal p {
+    font-size: clamp(14px, 1.5vw, 17px);
+    font-weight: 300;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .install-intro-terminal .terminal-joke {
+    font-size: clamp(13px, 1.4vw, 16px);
+    color: #aaa;
+    font-style: italic;
+  }
+
+  /* ── SLIDES 6 — OS ── */
+  .slide-6 { flex-direction: column; align-items: center; justify-content: center; gap: 48px; }
+  .os-split {
+    display: flex;
+    gap: 60px;
+    align-items: stretch;
+  }
+  .os-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 36px 48px;
+    border-radius: 16px;
+    min-width: 220px;
+    cursor: default;
+  }
+  .os-card.mac { background: #f7f4f1; }
+  .os-card.win { background: #f0f4f8; }
+  .os-icon { font-size: 48px; }
+  .os-name { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .os-desc { font-size: 14px; font-weight: 300; color: #999; text-align: center; line-height: 1.6; }
+  .slide-6-title { font-size: clamp(28px, 3.5vw, 46px); font-weight: 900; color: #1a1a1a; }
+  .slide-6-sub { font-size: 16px; font-weight: 300; color: #aaa; }
+  .requirements {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 40px;
+    background: #f7f4f1;
+    border-radius: 12px;
+  }
+  .req-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #bbb;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .req-items { display: flex; gap: 32px; align-items: center; }
+  .req-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #666;
+  }
+  .req-item .req-icon { font-size: 16px; }
+  .req-item strong { font-weight: 600; color: #444; }
+  .req-note { font-size: 12px; color: #bbb; font-style: italic; margin-left: 4px; }
+
+  /* ── SLIDE 7 — Download ── */
+  .slide-7 { flex-direction: column; align-items: stretch; justify-content: center; gap: 28px; padding: 48px 120px; }
+  .s7-header { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+  .s7-screenshot { max-height: 160px; width: auto; border-radius: 10px; box-shadow: 0 4px 18px rgba(0,0,0,0.13); flex-shrink: 0; }
+  .s7-title { font-size: clamp(24px, 2.8vw, 36px); font-weight: 900; color: #1a1a1a; white-space: nowrap; }
+  .s7-note { font-size: 13px; font-weight: 300; color: #c97b63; font-style: italic; text-align: right; max-width: 280px; transform: rotate(-1deg); }
+  .s7-cols { display: flex; gap: 0; align-items: flex-start; }
+  .s7-col { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 0 40px; }
+  .s7-col:first-child { padding-left: 0; }
+  .s7-col:last-child { padding-right: 0; }
+  .s7-divider { width: 1px; background: #e8e4df; align-self: stretch; margin: 0 8px; }
+  .s7-os-title { font-size: 18px; font-weight: 900; color: #1a1a1a; }
+  .s7-instruction { font-size: 13px; font-weight: 300; color: #888; }
+  .s7-alt-note { font-size: 11px; color: #bbb; font-style: italic; }
+
+  /* Download cards */
+  .s7-dl-card { display: flex; flex-direction: column; gap: 12px; padding: 20px 24px; border-radius: 12px; }
+  .mac-card { background: #f7f4f1; }
+  .win-card { background: #f0f4f8; }
+  .s7-dl-step { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; font-weight: 400; color: #333; line-height: 1.5; }
+  .s7-dl-num { font-weight: 900; color: #c97b63; font-size: 16px; flex-shrink: 0; line-height: 1.3; }
+
+  /* ── SLIDE 8 — Git for Windows ── */
+  .slide-8 { flex-direction: column; align-items: center; justify-content: center; gap: 36px; padding: 60px 140px; }
+  .s8-mac-skip { background: #f7f4f1; border-left: 4px solid #1a1a1a; padding: 12px 20px; font-size: 15px; font-weight: 700; color: #1a1a1a; border-radius: 8px; width: 100%; max-width: 620px; text-align: left; }
+  .s8-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.15em; color: #c97b63; text-transform: uppercase; }
+  .s8-title { font-size: clamp(28px, 3.5vw, 46px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s8-steps { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 620px; }
+  .s8-step { display: flex; align-items: flex-start; gap: 20px; padding: 18px 24px; background: #f7f4f1; border-radius: 12px; }
+  .s8-step-num { font-size: 22px; font-weight: 900; color: #c97b63; flex-shrink: 0; line-height: 1; }
+  .s8-step-content { display: flex; flex-direction: column; gap: 4px; }
+  .s8-step-title { font-size: 16px; font-weight: 700; color: #1a1a1a; }
+  .s8-step-desc { font-size: 13px; font-weight: 300; color: #888; line-height: 1.6; }
+  .s8-step-code { font-family: 'Menlo', monospace; font-size: 13px; color: #c97b63; background: #fff; padding: 4px 10px; border-radius: 6px; margin-top: 4px; direction: ltr; display: inline-block; }
+  .s8-funny { font-size: 13px; color: #bbb; font-style: italic; text-align: center; }
+
+  /* ── SLIDE 9 — Installation ── */
+  .slide-9 { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; overflow: hidden; }
+  .slide-9 img { height: 220px; width: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07)); flex-shrink: 0; mix-blend-mode: multiply; }
+  .s9-content { display: flex; flex-direction: column; gap: 14px; max-width: 520px; }
+  .s9-title { font-size: clamp(28px, 3.2vw, 42px); font-weight: 900; color: #1a1a1a; line-height: 1.2; }
+  .s9-annotation { font-size: 13px; color: #c97b63; font-style: italic; transform: rotate(-1deg); display: inline-block; }
+  .s9-troubleshoot { margin-top: 16px; font-size: 13px; color: #7a6a5a; background: #f9f3ee; border: 1px solid #e8d9cc; border-radius: 8px; padding: 10px 14px; line-height: 1.6; }
+  .s9-troubleshoot a { color: #c97b63; text-decoration: underline; }
+
+  /* ── SLIDE 10 — First moment (desktop app) ── */
+  .s10-title { font-size: clamp(24px, 3vw, 40px); font-weight: 900; color: #1a1a1a; }
+  .s10-subtitle { font-size: 15px; font-weight: 300; color: #888; line-height: 1.6; }
+  .s10-app-flow { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 580px; }
+  .s10-flow-step { display: flex; align-items: center; gap: 16px; padding: 14px 20px; background: #f7f4f1; border-radius: 10px; }
+  .s10-flow-num { font-size: 20px; font-weight: 900; color: #c97b63; flex-shrink: 0; }
+  .s10-flow-text { font-size: 14px; color: #333; line-height: 1.5; }
+  .s10-flow-text strong { color: #1a1a1a; }
+  .s10-permission-note { font-size: 13px; color: #c97b63; font-style: italic; text-align: center; margin-top: 8px; }
+
+  /* ── SLIDE 11 — Pricing ── */
+  .slide-11 { flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 40px 80px; background: #f5f2ee; }
+  .s11-title { font-size: clamp(22px, 2.8vw, 36px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s11-account-note { font-size: 13px; font-weight: 400; color: #888; background: #fff; padding: 8px 20px; border-radius: 20px; }
+  .pricing-cards { display: flex; gap: 20px; align-items: stretch; }
+  .pricing-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    border: 1.5px solid transparent;
+  }
+  .pricing-card.highlighted {
+    border-color: #c97b63;
+    box-shadow: 0 8px 32px rgba(201,123,99,0.15);
+  }
+  .pricing-card.dimmed { opacity: 0.5; }
+  .pricing-plan { font-size: 22px; font-weight: 900; color: #1a1a1a; }
+  .pricing-tagline { font-size: 12px; color: #999; font-weight: 300; }
+  .pricing-price { font-size: 28px; font-weight: 900; color: #1a1a1a; margin-top: 4px; }
+  .pricing-price-note { font-size: 11px; color: #aaa; font-weight: 300; line-height: 1.4; }
+  .pricing-divider { height: 1px; background: #f0ede9; margin: 4px 0; }
+  .pricing-cc { font-size: 12px; font-weight: 700; }
+  .pricing-cc.yes { color: #2d8a4e; }
+  .pricing-cc.no { color: #bbb; }
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #c97b63;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .s11-arrow-note {
+    font-size: 14px;
+    color: #c97b63;
+    font-style: italic;
+    text-align: center;
+  }
+  .s11-warning-note {
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    margin-top: 8px;
+    background: #fdf8f5;
+    border: 1px solid #e8ddd6;
+    border-radius: 8px;
+    padding: 8px 16px;
+  }
+
+  /* ── SLIDE 13 — Tips ── */
+  .slide-13 { flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 48px 100px; }
+  .s13-title { font-size: clamp(26px, 3vw, 40px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s13-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    width: 100%;
+    max-width: 860px;
+  }
+  .s13-tip {
+    background: #f7f4f1;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .s13-tip-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .s13-tip-title span {
+    color: #c97b63;
+    margin-right: 6px;
+  }
+  .s13-tip-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.6;
+  }
+  .s13-tip-img {
+    height: 64px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    margin-bottom: 4px;
+  }
+
+  /* ── SLIDE 14 — Desktop App features ── */
+  .s14-supertitle { font-size: 13px; font-weight: 700; color: #c97b63; letter-spacing: 0.12em; text-transform: uppercase; }
+  .s14-title { font-size: clamp(24px, 2.8vw, 38px); font-weight: 900; color: #1a1a1a; }
+  .s14-desktop-cols { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 620px; }
+  .s14-feature { display: flex; align-items: flex-start; gap: 16px; padding: 18px 24px; background: #f7f4f1; border-radius: 12px; }
+  .s14-feature-icon { font-size: 28px; flex-shrink: 0; }
+  .s14-feature-body { display: flex; flex-direction: column; gap: 4px; }
+  .s14-feature-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
+  .s14-feature-desc { font-size: 13px; font-weight: 300; color: #777; line-height: 1.6; }
+
+  /* ── SLIDE BYE ── */
+  .slide-bye { flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+  .bye-title { font-size: clamp(40px, 5.5vw, 76px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .bye-img { height: clamp(220px, 28vh, 360px); width: auto; }
+
+  /* ── SLIDE OUTRO ── */
+  .slide-outro { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 60px 80px 90px; }
+  .outro-text { display: flex; flex-direction: column; gap: 20px; max-width: 420px; flex-shrink: 0; }
+  .outro-title { font-size: clamp(28px, 3.2vw, 46px); font-weight: 900; color: #1a1a1a; line-height: 1.2; }
+  .outro-sub { font-size: clamp(14px, 1.5vw, 20px); font-weight: 300; color: #c97b63; line-height: 1.6; }
+  .outro-next { font-size: clamp(12px, 1.2vw, 16px); font-weight: 400; color: #555; line-height: 1.8; border-left: 3px solid #e8d8ce; padding-left: 14px; }
+  .outro-group { font-size: clamp(12px, 1.2vw, 16px); font-weight: 400; color: #333; line-height: 1.8; }
+  .outro-group strong { color: #c97b63; font-weight: 700; }
+  .outro-preview { flex-shrink: 0; width: 340px; height: 430px; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.13); position: relative; }
+  .outro-preview iframe { width: 720px; height: 910px; border: none; transform: scale(0.472); transform-origin: top left; pointer-events: none; }
+
+  /* ── SLIDE PROMPT ── */
+  .slide-prompt { flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 32px 60px 90px; }
+  .prompt-tag { font-size: 12px; font-weight: 700; color: #c97b63; letter-spacing: 0.14em; text-transform: uppercase; }
+  .prompt-box { background: #f9f4f0; border: 1.5px solid #e8d8ce; border-radius: 14px; padding: 20px 28px; max-width: 740px; width: 100%; max-height: 42vh; overflow-y: auto; text-align: left; direction: ltr; font-size: clamp(11px, 1.2vw, 15px); font-family: 'Inter', sans-serif; color: #333; line-height: 1.8; white-space: pre-wrap; }
+  .prompt-copy-btn { background: #c97b63; color: white; border: none; border-radius: 30px; padding: 10px 32px; font-size: clamp(13px, 1.3vw, 17px); font-family: 'Inter', sans-serif; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+  .prompt-copy-btn:hover { opacity: 0.85; }
+  .prompt-copy-btn.copied { background: #7aaa7a; }
+
+  /* ── SLIDE MISSION ── */
+  .slide-mission { flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 40px 180px 90px; overflow: hidden; }
+  .mission-title { font-size: clamp(32px, 4vw, 56px); font-weight: 900; color: #1a1a1a; text-align: center; width: 100%; line-height: 1.2; position: relative; z-index: 1; }
+  .mission-subtitle { font-size: clamp(16px, 1.8vw, 26px); font-weight: 700; color: #c97b63; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .mission-body { font-size: clamp(12px, 1.1vw, 15px); font-weight: 300; color: #555; text-align: center; line-height: 1.9; max-width: 640px; width: 100%; position: relative; z-index: 1; }
+  .mission-hint { font-size: clamp(12px, 1.1vw, 15px); color: #c97b63; font-weight: 400; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .mission-creature { position: absolute; opacity: 0.55; pointer-events: none; }
+  .mission-creature-1 { width: 240px; bottom: 40px; right: 40px; }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 100;
+  }
+  .nav button {
+    background: none;
+    border: 1.5px solid #d0ccc8;
+    color: #888;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 8px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav button:hover {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+  }
+  .nav .counter {
+    font-size: 12px;
+    color: #bbb;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  /* ── SLIDE NUMBER ── */
+  .slide-number {
+    position: fixed;
+    top: 28px;
+    left: 40px;
+    font-size: 12px;
+    color: #ccc;
+    letter-spacing: 0.1em;
+  }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ── NEW SLIDES — Compare / A / B / C / D / E / F ── */
+  .slide-compare { flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 48px 80px 100px; }
+  .compare-title { font-size: clamp(24px, 2.8vw, 38px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .compare-sub { font-size: clamp(13px, 1.4vw, 17px); font-weight: 300; color: #888; text-align: center; }
+  .compare-table { display: flex; gap: 36px; width: 100%; max-width: 900px; }
+  .compare-col { flex: 1; border-radius: 14px; padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .compare-col.terminal { background: #1e1e1e; }
+  .compare-col.desktop { background: #fdf0eb; border: 4px solid #c97b63; box-shadow: 0 10px 36px rgba(201,123,99,0.30); transform: scale(1.15); z-index: 2; }
+  .compare-col.vscode { background: #f0f4f8; }
+  .compare-col-title { font-size: 17px; font-weight: 900; margin-bottom: 4px; }
+  .compare-col.terminal .compare-col-title { color: #a8ff78; }
+  .compare-col.desktop .compare-col-title { color: #c97b63; }
+  .compare-col.vscode .compare-col-title { color: #5c8fd6; }
+  .compare-row { display: flex; flex-direction: column; gap: 3px; }
+  .compare-row-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #666; }
+  .compare-col.terminal .compare-row-label { color: #555; }
+  .compare-row-value { font-size: 13px; font-weight: 300; line-height: 1.5; }
+  .compare-col.terminal .compare-row-value { color: #e0e0e0; }
+  .compare-col.desktop .compare-row-value { color: #333; }
+  .compare-col.vscode .compare-row-value { color: #444; }
+  .compare-badge { font-size: 11px; font-weight: 700; background: #c97b63; color: white; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-top: 4px; }
+  .compare-footer { font-size: 13px; font-weight: 300; color: #aaa; text-align: center; font-style: italic; }
+
+  .slide-a { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-a img { max-height: 75vh; max-width: 48%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sa-text { display: flex; flex-direction: column; gap: 20px; max-width: 380px; }
+  .sa-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; line-height: 1.3; }
+  .sa-modes { display: flex; flex-direction: column; gap: 10px; }
+  .sa-mode { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-radius: 10px; background: #f7f4f1; }
+  .sa-mode.active { background: #fdf0eb; border: 1.5px solid #c97b63; }
+  .sa-mode-name { font-size: 14px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; min-width: 56px; }
+  .sa-mode.active .sa-mode-name { color: #c97b63; }
+  .sa-mode-desc { font-size: 13px; font-weight: 300; color: #888; line-height: 1.5; }
+  .sa-note { font-size: 12px; color: #c97b63; background: #fdf0eb; border-radius: 8px; padding: 10px 14px; line-height: 1.6; }
+
+  .slide-b { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-b img { max-height: 75vh; max-width: 40%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sb-text { display: flex; flex-direction: column; gap: 18px; max-width: 400px; }
+  .sb-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; }
+  .sb-items { display: flex; flex-direction: column; gap: 8px; }
+  .sb-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 10px; background: #f7f4f1; }
+  .sb-item-name { font-size: 13px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; min-width: 100px; }
+  .sb-item-desc { font-size: 12px; font-weight: 300; color: #888; line-height: 1.5; }
+  .sb-note { font-size: 12px; color: #c97b63; background: #fdf0eb; border-radius: 8px; padding: 10px 14px; line-height: 1.6; }
+
+  .slide-c { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-c img { max-height: 65vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sc-text { display: flex; flex-direction: column; gap: 18px; max-width: 400px; }
+  .sc-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; }
+  .sc-models { display: flex; flex-direction: column; gap: 8px; }
+  .sc-model { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 10px; background: #f7f4f1; }
+  .sc-model.recommended { background: #fdf0eb; border: 1.5px solid #c97b63; }
+  .sc-model-name { font-size: 13px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; min-width: 110px; }
+  .sc-model.recommended .sc-model-name { color: #c97b63; }
+  .sc-model-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.5; }
+  .sc-footer { font-size: 12px; color: #aaa; font-style: italic; }
+  .sc-date { font-size: 11px; color: #bbb; }
+
+  .slide-d { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-d img { max-height: 75vh; max-width: 48%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sd-text { display: flex; flex-direction: column; gap: 20px; max-width: 380px; }
+  .sd-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; line-height: 1.3; }
+  .sd-body { font-size: clamp(13px, 1.4vw, 17px); font-weight: 300; color: #555; line-height: 1.8; }
+  .sd-warning { background: #fff8f6; border-left: 3px solid #c97b63; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #555; line-height: 1.7; }
+  .sd-warning strong { color: #c97b63; font-weight: 700; }
+  .sd-tip { font-size: 12px; color: #888; font-style: italic; line-height: 1.6; }
+
+  .slide-e { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-e img { max-height: 65vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .se-text { display: flex; flex-direction: column; gap: 18px; max-width: 400px; }
+  .se-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; }
+  .se-permissions { display: flex; flex-direction: column; gap: 8px; }
+  .se-perm { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 10px; background: #f7f4f1; }
+  .se-perm.recommended { background: #fdf0eb; border: 1.5px solid #c97b63; }
+  .se-perm.danger { opacity: 0.45; }
+  .se-perm-name { font-size: 13px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; min-width: 136px; }
+  .se-perm.recommended .se-perm-name { color: #c97b63; }
+  .se-perm-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.5; }
+  .se-note { font-size: 12px; color: #555; background: #fdf0eb; border-radius: 8px; padding: 10px 14px; line-height: 1.7; }
+
+  .slide-f { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-f img { max-height: 65vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sf-text { display: flex; flex-direction: column; gap: 18px; max-width: 400px; }
+  .sf-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; }
+  .sf-items { display: flex; flex-direction: column; gap: 8px; }
+  .sf-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 16px; border-radius: 10px; background: #f7f4f1; }
+  .sf-item.highlight { background: #fdf0eb; }
+  .sf-item-icon { font-size: 20px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .sf-item-body { display: flex; flex-direction: column; gap: 3px; }
+  .sf-item-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+  .sf-item-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.5; }
+  .sf-note { font-size: 12px; color: #aaa; font-style: italic; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 680px) {
+    .slide { padding: 24px 20px 80px; overflow-y: auto; align-items: flex-start; justify-content: flex-start; flex-direction: column !important; gap: 20px !important; }
+    .slide-2, .slide-4, .slide-5, .slide-install-intro,
+    .slide-9, .slide-outro, .slide-7 .s7-cols { flex-direction: column !important; gap: 24px !important; }
+    .slide img, .slide-2 img, .slide-4 img, .slide-5 img,
+    .slide-install-intro img, .slide-9 img { height: 160px !important; width: auto; align-self: center; }
+    .bye-img { height: 180px !important; }
+    .character img { height: 160px !important; }
+    .characters { gap: 24px !important; flex-wrap: wrap; }
+    .safety-grid { grid-template-columns: 1fr !important; }
+    .safety-raccoon { display: none; }
+    .slide-safety { padding: 24px 20px 80px !important; }
+    .os-split { flex-direction: column !important; gap: 16px !important; }
+    .os-card { padding: 20px 24px !important; }
+    .s7-cols { flex-direction: column !important; }
+    .s7-col { padding: 0 !important; }
+    .s7-divider { display: none; }
+    .slide-7 { padding: 24px 20px 80px !important; }
+    .slide-8 { padding: 24px 20px 80px !important; }
+    .outro-preview { display: none; }
+    .outro-text { max-width: 100% !important; }
+    .slide-mission { padding: 24px 20px 80px !important; }
+    .slide-10 { padding: 24px 20px 80px !important; }
+    .slide-prompt { padding: 24px 20px 80px !important; }
+    .prompt-box { max-height: 55vh; font-size: 13px !important; }
+    .nav button { padding: 12px 28px; font-size: 15px; }
+    .nav { gap: 20px; }
+    .slide-number { display: none; }
+    .typo-slide, .partner-text, .install-intro-text, .s9-content { max-width: 100% !important; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- SLIDE 1 — Title -->
+  <div class="slide slide-1 active">
+    <h1>The Complete Guide<br>to Claude <span>Code</span></h1>
+    <div class="subtitle">For people too busy to read complete guides.</div>
+  </div>
+
+  <!-- SLIDE 2 — Definition -->
+  <div class="slide slide-2">
+    <div class="definition-text">
+      <div class="def-title">Claude Code. No fluff.</div>
+      <div class="def-question">What is it, exactly?</div>
+      <h2>The difference between someone who says<br>"here's what you should do"<br>and someone who says<br>"it's already done."</h2>
+      <div class="def-punch">Claude Code is the second one.</div>
+      <div class="def-body">
+        It doesn't just explain.<br>
+        It doesn't just advise.<br>
+        It actually works on your files, inside the project, in real time.
+      </div>
+    </div>
+    <img src="תמונות/preview_slide2.png" alt="Done Creature">
+  </div>
+
+  <!-- SLIDE 3 — What is Claude Code -->
+  <div class="slide slide-3" style="flex-direction:column;gap:48px;">
+    <div class="top-text">
+      <h2>ChatGPT is a colleague you <span>email</span>.<br>Claude Code is the one who <span>moved in.</span></h2>
+    </div>
+
+    <div class="characters">
+
+      <div class="character">
+        <img src="תמונות/preview_slide3_chatgpt.png" alt="ChatGPT">
+        <div class="character-label">
+          <div class="name">ChatGPT</div>
+          <div class="desc">Answers in chat<br>Can't see your files<br>Stays on their side</div>
+        </div>
+      </div>
+
+      <div class="vs-divider">VS</div>
+
+      <div class="character">
+        <img src="תמונות/preview_slide3_claude.png" alt="Claude Code">
+        <div class="character-label">
+          <div class="name" style="color:#c97b63;">Claude Code</div>
+          <div class="desc">Lives inside your computer<br>Sees your folders<br>Actually does things</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — Who it's for -->
+  <div class="slide slide-4">
+    <img src="תמונות/preview_lost_woman.png" alt="Lost Woman">
+    <div class="typo-slide">
+      <div class="typo-title">This is for you if...</div>
+      <ul class="typo-list">
+        <li>You have a website that hasn't been touched since Flash was still a thing.</li>
+        <li>A portfolio that's been "almost ready" for a year.</li>
+        <li>A newsletter that survived two editions and quietly vanished.</li>
+        <li>A project born in a moment of inspiration, now living as an open browser tab.</li>
+      </ul>
+      <div class="typo-wink">In short — if you have an idea, a platform, a site, a portfolio, a blog, a newsletter, or any digital project that exists, almost exists, or was simply supposed to exist by now.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 — Partner -->
+  <div class="slide slide-5">
+    <div class="partner-text">
+      <div class="partner-title">Like an extremely capable assistant<br>who actually needs you.</div>
+      <div class="partner-body">She'll do everything. Really, everything.<br>Just tell her what you're building.</div>
+      <div class="partner-label">The collaboration:</div>
+      <ul class="partner-list">
+        <li>You give direction</li>
+        <li>She delivers results</li>
+        <li>You refine</li>
+        <li>You decide what stays</li>
+      </ul>
+    </div>
+    <img src="תמונות/fluffy_helper.png" alt="Fluffy Helper">
+  </div>
+
+  <!-- SLIDE SAFETY — Ground Rules -->
+  <div class="slide slide-safety">
+    <img src="תמונות/preview_raccoon.png" class="safety-raccoon" alt="">
+    <div class="safety-title">Ground Rules</div>
+    <div class="safety-sub">Or: how not to turn your first session into a tech support ticket</div>
+    <div class="safety-grid">
+      <div class="safety-item"><span class="num">①</span><span>Step by step. Don't send it on an unsupervised mission as if it already knows your whole context.</span></div>
+      <div class="safety-item"><span class="num">②</span><span>Don't install things you don't understand. Mystery is still not a personality trait.</span></div>
+      <div class="safety-item"><span class="num">③</span><span>Stay away from critical files. Day one is not the time for open-heart surgery.</span></div>
+      <div class="safety-item"><span class="num">④</span><span>Start with a clean practice folder. A space where mistakes have no consequences.</span></div>
+      <div class="safety-item"><span class="num">⑤</span><span>Don't approve everything blindly. Charisma is not a security policy.</span></div>
+      <div class="safety-item"><span class="num">⑥</span><span>If something is unclear — stop and ask. Don't nod politely at the terminal and hope for the best.</span></div>
+      <div class="safety-item"><span class="num">⑦</span><span>This is a powerful tool. Not a charming little widget with no consequences.</span></div>
+    </div>
+    <div class="safety-footer">Curiosity, absolutely.<br><span>Adventure with permissions — perhaps not.</span></div>
+  </div>
+
+  <!-- SLIDE COMPARE — Three ways to work with Claude Code -->
+  <div class="slide slide-compare">
+    <div class="compare-title">Three ways. Starting with the easy one.</div>
+    <div class="compare-sub">We'll learn all of them. Starting with the comfortable one.</div>
+    <div class="compare-table">
+      <div class="compare-col terminal">
+        <div class="compare-col-title">⌨️ Terminal</div>
+        <div class="compare-row">
+          <div class="compare-row-label">What it is</div>
+          <div class="compare-row-value">Black lines and commands. Precise and fast.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">Best for</div>
+          <div class="compare-row-value">Those who feel at home with code</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">When?</div>
+          <div class="compare-row-value">Soon</div>
+        </div>
+      </div>
+      <div class="compare-col desktop">
+        <div class="compare-col-title">🖥️ Desktop ⭐</div>
+        <div class="compare-row">
+          <div class="compare-row-label">What it is</div>
+          <div class="compare-row-value">An app with buttons. You see everything before it happens.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">Best for</div>
+          <div class="compare-row-value">Beginners. All of us.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">This session</div>
+          <div class="compare-row-value"><span class="compare-badge">Yes — this is what we learn</span></div>
+        </div>
+      </div>
+      <div class="compare-col vscode">
+        <div class="compare-col-title">💻 VS Code</div>
+        <div class="compare-row">
+          <div class="compare-row-label">What it is</div>
+          <div class="compare-row-value">Professional code editor with Claude Code built in</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">Best for</div>
+          <div class="compare-row-value">After you've practiced</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">When?</div>
+          <div class="compare-row-value">Soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="compare-footer">Same tool. The interface — a matter of experience and preference. It'll all come.</div>
+  </div>
+
+  <!-- SLIDE INSTALL INTRO -->
+  <div class="slide slide-install-intro">
+    <div class="install-intro-text">
+      <div class="install-intro-title">Installing<br>Claude Code.</div>
+      <div class="install-intro-sub">The moment has arrived.<br>Excited? Same.</div>
+      <div class="install-intro-terminal">
+        <p>No terminal this time.</p>
+        <p class="terminal-joke">You download an app. Like Google Maps. Except this one builds things for you.</p>
+        <p>A graphical interface, buttons, and Claude that waits<br>for your approval before touching anything.<br>Yours. Completely.</p>
+      </div>
+    </div>
+    <img src="תמונות/drumming_goat.png" alt="Drumming Goat">
+  </div>
+
+  <!-- SLIDE 11 — Account & Pricing -->
+  <div class="slide slide-11">
+    <div class="s11-title">Before you run — you need an account.</div>
+    <div class="s11-account-note">👤 No Claude account? Sign up first at claude.ai</div>
+
+    <div class="pricing-cards">
+
+      <div class="pricing-card dimmed">
+        <div class="pricing-plan">Free</div>
+        <div class="pricing-tagline">Try Claude</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-cc no">✗ Claude Code not included</div>
+      </div>
+
+      <div class="pricing-card highlighted">
+        <div class="pricing-badge">Start here ✓</div>
+        <div class="pricing-plan">Pro</div>
+        <div class="pricing-tagline">For everyday productivity</div>
+        <div class="pricing-price">$17</div>
+        <div class="pricing-price-note">per month (annual) / $20 monthly</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-cc yes">✓ Claude Code included</div>
+      </div>
+
+      <div class="pricing-card dimmed">
+        <div class="pricing-plan">Max</div>
+        <div class="pricing-tagline">Get the most out of Claude</div>
+        <div class="pricing-price">$100+</div>
+        <div class="pricing-price-note">per month</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-cc yes">✓ Claude Code included</div>
+      </div>
+
+    </div>
+    <div class="s11-arrow-note">Pro is more than enough to get started. You can always upgrade.</div>
+    <div class="s11-warning-note">⚠️ Before starting — check that you're on a <strong>monthly</strong> plan, not annual. Easier to cancel if needed.</div>
+  </div>
+
+  <!-- SLIDE 6 — Mac or Windows -->
+  <div class="slide slide-6">
+    <div class="slide-6-title">First — what are you working with?</div>
+    <div class="os-split">
+      <div class="os-card mac">
+        <div class="os-icon">🍎</div>
+        <div class="os-name">Mac</div>
+        <div class="os-desc">Terminal is<br>built into the system</div>
+      </div>
+      <div class="os-card win">
+        <div class="os-icon">🪟</div>
+        <div class="os-name">Windows</div>
+        <div class="os-desc">PowerShell is<br>built into the system</div>
+      </div>
+    </div>
+    <div class="requirements">
+      <div class="req-section-label">What you need to get started</div>
+      <div class="req-items">
+        <div class="req-item"><span class="req-icon">🍎</span> Mac <strong>10.15+</strong> &nbsp;|&nbsp; <span class="req-icon">🪟</span> Windows <strong>10 / 11</strong></div>
+        <div class="req-item"><span class="req-icon">🌐</span> Internet connection</div>
+        <div class="req-item"><span class="req-icon">👤</span> Anthropic account <span class="req-note">(created in the previous step)</span></div>
+        <div class="req-item"><span class="req-icon">💪</span> No powerful computer needed</div>
+      </div>
+    </div>
+    <div class="slide-6-sub">Both work. Exactly the same from here.</div>
+  </div>
+
+  <!-- SLIDE 8 — Git for Windows -->
+  <div class="slide slide-8">
+    <div class="s8-mac-skip">🍎 On a Mac? This slide is not for you. Move on.</div>
+    <div class="s8-eyebrow">🪟 Windows users only</div>
+    <div class="s8-title">One step before everything.<br>Just once.</div>
+    <div class="s8-steps">
+      <div class="s8-step">
+        <div class="s8-step-num">1</div>
+        <div class="s8-step-content">
+          <div class="s8-step-title">Install Git for Windows</div>
+          <div class="s8-step-desc">Go to git-scm.com ← download ← install like any normal program.</div>
+          <div class="s8-step-code">git-scm.com/downloads/win</div>
+        </div>
+      </div>
+      <div class="s8-step">
+        <div class="s8-step-num">2</div>
+        <div class="s8-step-content">
+          <div class="s8-step-title">Continue to the next slide</div>
+          <div class="s8-step-desc">That's it. Git for Windows is the infrastructure Claude Code needs on Windows. One-time — you won't touch it again.</div>
+        </div>
+      </div>
+    </div>
+    <div class="s8-funny">*(Yes, this looks more complicated than it actually is.)*</div>
+  </div>
+
+  <!-- SLIDE 7 — Download -->
+  <div class="slide slide-7">
+
+    <div class="s7-header">
+      <div class="s7-title">Download. Two clicks. You're in.</div>
+      <img src="תמונות/הורדה.png" alt="Download Page" class="s7-screenshot">
+    </div>
+
+    <div class="s7-cols">
+
+      <!-- MAC -->
+      <div class="s7-col">
+        <div class="s7-os-title">🍎 Mac</div>
+        <div class="s7-instruction">Go to claude.com/download ← click Mac ← download</div>
+        <div class="s7-dl-card mac-card">
+          <div class="s7-dl-step"><span class="s7-dl-num">1</span> Go to <strong>claude.com/download</strong></div>
+          <div class="s7-dl-step"><span class="s7-dl-num">2</span> Click the Mac (Universal) button</div>
+          <div class="s7-dl-step"><span class="s7-dl-num">3</span> Drag the app to Applications 🎉</div>
+        </div>
+        <div class="s7-alt-note">Apple Silicon and Intel — same download. Works on everything.</div>
+      </div>
+
+      <div class="s7-divider"></div>
+
+      <!-- WINDOWS -->
+      <div class="s7-col">
+        <div class="s7-os-title">🪟 Windows</div>
+        <div class="s7-instruction">Same link, Windows version, run the .exe</div>
+        <div class="s7-dl-card win-card">
+          <div class="s7-dl-step"><span class="s7-dl-num">1</span> Go to <strong>claude.com/download</strong></div>
+          <div class="s7-dl-step"><span class="s7-dl-num">2</span> Click the Windows button</div>
+          <div class="s7-dl-step"><span class="s7-dl-num">3</span> Run the file ← yes to everything that pops up 🎉</div>
+        </div>
+        <div class="s7-alt-note">⚠️ Windows only: Git must be installed first. Previous slide explains.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE 9 — Installation steps -->
+  <div class="slide slide-9">
+    <div class="s9-content">
+      <div class="s9-title">Two steps.<br>Both of them involve clicking a button.</div>
+
+      <div class="s8-steps" style="max-width: 480px;">
+        <div class="s8-step">
+          <div class="s8-step-num">①</div>
+          <div class="s8-step-content">
+            <div class="s8-step-title">Open it</div>
+            <div class="s8-step-desc">Mac: Applications / Windows: Start Menu</div>
+          </div>
+        </div>
+        <div class="s8-step">
+          <div class="s8-step-num">③</div>
+          <div class="s8-step-content">
+            <div class="s8-step-title">Sign into your Anthropic account</div>
+            <div class="s8-step-desc">Same account you created in the previous step</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="s9-annotation">You're in. With minimal sweating.</div>
+      <div class="s9-troubleshoot">🛠️ Stuck? Happens to everyone. Take a screenshot and ask Claude — it knows how to solve it. <a href="https://claude.ai" target="_blank">claude.ai</a></div>
+    </div>
+    <img src="תמונות/installer_creature.png" alt="Installer Creature">
+  </div>
+
+  <!-- SLIDE A — Click Code -->
+  <div class="slide slide-a">
+    <img src="תמונות/a.png" alt="Claude Code Desktop">
+    <div class="sa-text">
+      <div class="sa-title">You opened the app. Now — here.</div>
+      <div class="sa-modes">
+        <div class="sa-mode">
+          <div class="sa-mode-name">Chat</div>
+          <div class="sa-mode-desc">A regular conversation with Claude. What you already know. Not this.</div>
+        </div>
+        <div class="sa-mode active">
+          <div class="sa-mode-name">Code</div>
+          <div class="sa-mode-desc">Our place. Click here.</div>
+        </div>
+        <div class="sa-mode">
+          <div class="sa-mode-name">Cowork</div>
+          <div class="sa-mode-desc">Real-time collaboration. Later.</div>
+        </div>
+      </div>
+      <div class="sa-note">If nothing happens — you may need to upgrade your subscription. Go back to the pricing slide.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE B — Sidebar -->
+  <div class="slide slide-b">
+    <img src="תמונות/b.png" alt="Sidebar">
+    <div class="sb-text">
+      <div class="sb-title">Home base for your sessions</div>
+      <div class="sb-items">
+        <div class="sb-item">
+          <div class="sb-item-name">New session</div>
+          <div class="sb-item-desc">A new conversation with Claude. Where you start every time.</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-item-name">Scheduled</div>
+          <div class="sb-item-desc">Scheduled tasks. Advanced — don't touch this now.</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-item-name">Dispatch</div>
+          <div class="sb-item-desc">Running multiple tasks in parallel. Also advanced. Also not now.</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-item-name">Customize</div>
+          <div class="sb-item-desc">Personal settings for Claude. We'll get there.</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-item-name">All projects</div>
+          <div class="sb-item-desc">All the projects you've created. Your archive.</div>
+        </div>
+      </div>
+      <div class="sb-note">If Claude asks for verification at this point — verify. Completely normal.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE C — Model Selection -->
+  <div class="slide slide-c">
+    <img src="תמונות/c.png" alt="Model Selection">
+    <div class="sc-text">
+      <div class="sc-title">Which model do you choose?</div>
+      <div class="sc-models">
+        <div class="sc-model">
+          <div class="sc-model-name">Opus 4.6</div>
+          <div class="sc-model-desc">The smartest, the deepest. For complex projects that require real thinking.</div>
+        </div>
+        <div class="sc-model">
+          <div class="sc-model-name">Opus 4.6 1M</div>
+          <div class="sc-model-desc">Like Opus — but with a million-token context window. For projects with many files.</div>
+        </div>
+        <div class="sc-model recommended">
+          <div class="sc-model-name">Sonnet 4.6 ✓</div>
+          <div class="sc-model-desc">Balanced. Smart. Fast. Works for 90% of tasks. Our default.</div>
+        </div>
+        <div class="sc-model">
+          <div class="sc-model-name">Haiku 4.5</div>
+          <div class="sc-model-desc">Fastest, lightest. For quick questions and small checks.</div>
+        </div>
+      </div>
+      <div class="sc-footer">Start with Sonnet. Until you feel you need something else — you don't.</div>
+      <div class="sc-date">Updated: March 2026</div>
+    </div>
+  </div>
+
+  <!-- SLIDE D — Folder -->
+  <div class="slide slide-d">
+    <img src="תמונות/d.png" alt="Folder Selection">
+    <div class="sd-text">
+      <div class="sd-title">The home Claude works inside</div>
+      <div class="sd-body">Claude only sees what's in the folder you chose.<br>It doesn't leave. It doesn't search. It doesn't peek sideways.<br><br>Which means everything inside — it sees.</div>
+      <div class="sd-warning"><strong>What should NOT be there:</strong><br>Passwords and .env files · Sensitive personal data · Disk backups and system folders</div>
+      <div class="sd-tip">💡 Recommendation: a clean practice folder before touching real projects. A space where mistakes have no consequences.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE E — Permissions -->
+  <div class="slide slide-e">
+    <img src="תמונות/e.png" alt="Permissions">
+    <div class="se-text">
+      <div class="se-title">Who decides here?</div>
+      <div class="se-permissions">
+        <div class="se-perm recommended">
+          <div class="se-perm-name">Ask permissions ✓</div>
+          <div class="se-perm-desc">Claude asks before every action. Recommended for beginners. You're in charge.</div>
+        </div>
+        <div class="se-perm">
+          <div class="se-perm-name">Auto accept edits</div>
+          <div class="se-perm-desc">Makes changes directly without asking. Efficient, requires experience.</div>
+        </div>
+        <div class="se-perm">
+          <div class="se-perm-name">Plan mode</div>
+          <div class="se-perm-desc">Shows a plan before doing anything. Good for large projects.</div>
+        </div>
+        <div class="se-perm danger">
+          <div class="se-perm-name">Bypass permissions</div>
+          <div class="se-perm-desc">No approvals at all. Don't touch this. Not now.</div>
+        </div>
+      </div>
+      <div class="se-note">Start with Ask Permissions. Always.<br>Not because it isn't trustworthy — because you need to know what's happening.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE F — Plus Menu -->
+  <div class="slide slide-f">
+    <img src="תמונות/f.png" alt="Plus Menu">
+    <div class="sf-text">
+      <div class="sf-title">What's hiding behind the +</div>
+      <div class="sf-items">
+        <div class="sf-item highlight">
+          <div class="sf-item-icon">📎</div>
+          <div class="sf-item-body">
+            <div class="sf-item-name">Add files or photos</div>
+            <div class="sf-item-desc">Attach a file, image or document directly to the conversation. Claude will see it and respond accordingly.</div>
+          </div>
+        </div>
+        <div class="sf-item">
+          <div class="sf-item-icon">/</div>
+          <div class="sf-item-body">
+            <div class="sf-item-name">Slash commands</div>
+            <div class="sf-item-desc">Quick commands like /help and /clear. Life-shorteners.</div>
+          </div>
+        </div>
+        <div class="sf-item">
+          <div class="sf-item-icon">🔗</div>
+          <div class="sf-item-body">
+            <div class="sf-item-name">Connectors</div>
+            <div class="sf-item-desc">Connect to external tools — Notion, GitHub, Google Drive. Advanced.</div>
+          </div>
+        </div>
+        <div class="sf-item">
+          <div class="sf-item-icon">🔌</div>
+          <div class="sf-item-body">
+            <div class="sf-item-name">Add plugins</div>
+            <div class="sf-item-desc">Extensions that add capabilities to Claude. More to come.</div>
+          </div>
+        </div>
+      </div>
+      <div class="sf-note">Add files or photos — most useful right now. The rest? We'll meet them in future sessions.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13 — Tips -->
+  <div class="slide slide-13">
+    <div class="s13-title">A few rules nobody told you</div>
+    <div class="s13-grid">
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_hebrew.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>01</span> Write in your own language</div>
+        <div class="s13-tip-body">No need to write in formal English to sound professional. Be direct. It understands you either way.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_specific.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>02</span> "Update the site" — that's not a task</div>
+        <div class="s13-tip-body">That's a wish. Be specific: what, where, in which direction. The clearer the task, the less it improvises.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_why.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>03</span> Tell it why</div>
+        <div class="s13-tip-body">"Because I want this to look more professional" — that's information. It works differently when it understands the goal. Unlike contractors.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_mistake.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>04</span> It made a mistake? Say so. Directly.</div>
+        <div class="s13-tip-body">It won't be offended. It won't sulk. It won't send a passive-aggressive message three hours later. It will fix it.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_whatchanged.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>05</span> Ask "what did you change?"</div>
+        <div class="s13-tip-body">After a big action — a perfectly legitimate question. It will tell you exactly. You don't need to guess and feel lost.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_small.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>06</span> Don't swallow the elephant whole</div>
+        <div class="s13-tip-body">"Build me a website" is not a task, it's an entire project. "Add a contact button to the homepage" — that's a task.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE MISSION — First Assignment -->
+  <div class="slide slide-mission">
+    <img src="תמונות/preview_unicorn_monkey.png" class="mission-creature mission-creature-1" alt="">
+    <div class="mission-title">Your First Assignment</div>
+    <div class="mission-subtitle">Ask Claude to build you a simple weekly HTML page.</div>
+    <div class="mission-body">
+      Yes — a real page you can open in a browser and feel like a proper digital human for a moment.<br><br>
+      The idea is not to complicate things. It's to see how quickly a few lines of text can become something visual, organized, and beautiful.<br><br>
+      You simply give it a title, a few tasks for the week, maybe a small note at the bottom — and it builds you a neat little page.<br><br>
+      A perfect starting assignment: simple, satisfying, and it immediately shows you that Claude doesn't just "talk" — it actually creates something with you that you can see.
+    </div>
+    <div class="mission-hint">The full prompt — on the next slide →</div>
+  </div>
+
+  <!-- SLIDE PROMPT -->
+  <div class="slide slide-prompt">
+    <div class="prompt-tag">The Prompt — copy and adapt</div>
+    <div class="prompt-box" id="promptText">Hey Claude, this is my first time with Claude Code and I'm just getting started.
+
+I'd like you to create a simple, clean, and pleasant HTML page that displays my weekly plan.
+It's important to me that it's clear, organized, and has a nice but not overly complex design.
+
+Use the following content:
+
+Title: [write your title here]
+Subtitle: [write your subtitle here]
+
+Visual style: [minimalist / colorful / dreamy / elegant / playful]
+(You can also describe freely — "something with flowers", "ocean blue", "like a beautiful newsletter")
+
+My tasks for the week:
+- [task 1]
+- [task 2]
+- [task 3]
+- [task 4]
+- [task 5]
+
+A small note at the bottom:
+[write a note if you'd like]
+
+Please:
+- Create everything in a single HTML file
+- Add simple CSS inside the same file
+- Keep the design beautiful, clear and user-friendly
+- Save the file as week.html
+- After creating it, explain in plain words what you made
+- Tell me exactly how to open the file in a browser
+
+Assume I know absolutely no code.</div>
+    <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copy the prompt</button>
+  </div>
+
+  <!-- SLIDE OUTRO -->
+  <div class="slide slide-outro">
+    <div class="outro-text">
+      <div class="outro-title">This is what came out.</div>
+      <div class="outro-sub">Same tool. The result — that's you.</div>
+      <div class="outro-next">In the next sessions we'll learn to ask for more, refine more, and surprise ourselves more than this time.</div>
+      <div class="outro-group">The community is open — for questions, for laughs, and for whatever comes out of your first assignment.<br><strong>Seriously, share. This is home.</strong></div>
+    </div>
+    <div class="outro-preview">
+      <iframe src="תמונות/week-ella.html" scrolling="no" title="Output example"></iframe>
+    </div>
+  </div>
+
+  <!-- SLIDE BYE -->
+  <div class="slide slide-bye">
+    <img src="תמונות/preview_bye_creature.png" class="bye-img" alt="">
+    <div class="bye-title">See you in the next session.</div>
+  </div>
+
+</div><!-- /.deck -->
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prev()">← Prev</button>
+  <span class="counter" id="counter">1 / 2</span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+
+  function copyPrompt(btn) {
+    const text = document.getElementById('promptText').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy the prompt'; btn.classList.remove('copied'); }, 2500);
+    });
+  }
+
+  document.getElementById('counter').textContent = `1 / ${slides.length}`;
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight') next();
+  });
+</script>
+</body>
+</html>
