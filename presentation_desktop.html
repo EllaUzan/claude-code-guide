@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קלוד קוד — מדריך למתחילות</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #f5f2ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  /* ── GLOBAL — תמונות בלי רקע לבן ── */
+  .slide img { mix-blend-mode: multiply; }
+
+  /* ── SLIDE ── */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    background: #ffffff;
+  }
+  .slide.active { display: flex; }
+
+  /* ── SLIDE 1 — title ── */
+  .slide-1 {
+    flex-direction: column;
+    gap: 12px;
+    background: #ffffff;
+  }
+  .slide-1 .eyebrow {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+  .slide-1 h1 {
+    font-size: clamp(48px, 7vw, 90px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.05;
+  }
+  .slide-1 h1 span { color: #c97b63; }
+  .slide-1 .subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: #888;
+    margin-top: 8px;
+  }
+
+  /* ── SLIDE 2 — definition ── */
+  .slide-2 {
+    flex-direction: row;
+    gap: 80px;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide-2 .definition-text {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .slide-2 .definition-text h2 {
+    font-size: clamp(22px, 2.8vw, 36px);
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.4;
+  }
+  .slide-2 .def-title {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 900;
+    color: #1a1a1a;
+  }
+  .slide-2 .def-question {
+    font-size: 16px;
+    font-weight: 400;
+    color: #aaa;
+    letter-spacing: 0.05em;
+  }
+  .slide-2 h2 {
+    font-size: clamp(17px, 2vw, 24px);
+    font-weight: 400;
+    color: #444;
+    line-height: 1.6;
+  }
+  .slide-2 .def-punch {
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 700;
+    color: #c97b63;
+  }
+  .slide-2 .definition-text .wink {
+    font-size: 14px;
+    font-weight: 300;
+    color: #bbb;
+    font-style: italic;
+  }
+  .slide-2 .def-body {
+    font-size: clamp(14px, 1.6vw, 18px);
+    font-weight: 300;
+    color: #888;
+    line-height: 1.8;
+  }
+  .slide-2 img {
+    height: 320px;
+    width: auto;
+    mix-blend-mode: multiply;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    mix-blend-mode: multiply;
+  }
+
+  /* ── SLIDE 3 — two characters ── */
+  .slide-3 {
+    flex-direction: column;
+    gap: 48px;
+  }
+  .slide-3 .top-text {
+    text-align: center;
+    max-width: 680px;
+  }
+  .slide-3 .top-text h2 {
+    font-size: clamp(26px, 3.5vw, 42px);
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+  .slide-2 .top-text h2 span { color: #c97b63; }
+
+  .characters {
+    display: flex;
+    gap: 80px;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .character {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .character img {
+    height: 280px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.08));
+    mix-blend-mode: multiply;
+    transition: transform 0.3s ease;
+  }
+  .character img:hover { transform: translateY(-6px); }
+
+  .character-label {
+    text-align: center;
+  }
+  .character-label .name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .character-label .desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: #999;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .vs-divider {
+    font-size: 13px;
+    font-weight: 400;
+    color: #ccc;
+    letter-spacing: 0.15em;
+    padding-bottom: 80px;
+  }
+
+  /* ── SLIDE 4 — with image ── */
+  .slide-4 { flex-direction: row; align-items: center; justify-content: center; gap: 80px; padding: 80px 120px; }
+  .slide-4 img {
+    height: 320px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    flex-shrink: 0;
+    mix-blend-mode: multiply;
+  }
+  .typo-slide { display: flex; flex-direction: column; gap: 32px; max-width: 520px; }
+  .typo-title {
+    font-size: clamp(32px, 4.5vw, 58px);
+    font-weight: 900;
+    color: #1a1a1a;
+  }
+  .typo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .typo-list li {
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 300;
+    color: #444;
+    padding-right: 24px;
+    position: relative;
+  }
+  .typo-list li::before {
+    content: "—";
+    position: absolute;
+    right: 0;
+    color: #c97b63;
+  }
+  .typo-wink {
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 400;
+    color: #bbb;
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  /* ── SLIDE SAFETY — כללי זהירות ── */
+  .slide-safety { flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 32px 80px 80px; overflow: hidden; }
+  .safety-title { font-size: clamp(28px, 3.2vw, 46px); font-weight: 900; color: #1a1a1a; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .safety-sub { font-size: clamp(12px, 1.2vw, 16px); font-weight: 300; color: #c97b63; text-align: center; width: 100%; margin-bottom: 6px; position: relative; z-index: 1; }
+  .safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px; max-width: 780px; width: 100%; position: relative; z-index: 1; }
+  .safety-item { font-size: clamp(12px, 1.15vw, 15px); font-weight: 400; color: #333; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .safety-item .num { color: #c97b63; font-weight: 700; flex-shrink: 0; }
+  .safety-footer { font-size: clamp(12px, 1.2vw, 16px); font-weight: 700; color: #1a1a1a; text-align: center; margin-top: 8px; line-height: 1.8; position: relative; z-index: 1; }
+  .safety-footer span { color: #c97b63; }
+  .safety-raccoon { position: absolute; width: 200px; bottom: 40px; left: 30px; opacity: 0.6; pointer-events: none; mix-blend-mode: multiply; }
+
+  /* ── SLIDE 5 — fluffy helper ── */
+  .slide-5 { flex-direction: row; align-items: center; justify-content: center; gap: 80px; padding: 80px 120px; }
+  .slide-5 img {
+    height: 340px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    flex-shrink: 0;
+    mix-blend-mode: multiply;
+  }
+  .slide-5 .partner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 480px;
+  }
+  .slide-5 .partner-title {
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+  .slide-5 .partner-body {
+    font-size: clamp(15px, 1.8vw, 20px);
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+  }
+  .slide-5 .partner-label {
+    font-size: clamp(13px, 1.4vw, 16px);
+    font-weight: 400;
+    color: #aaa;
+    letter-spacing: 0.05em;
+  }
+  .slide-5 .partner-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .slide-5 .partner-list li {
+    font-size: clamp(17px, 2vw, 24px);
+    font-weight: 300;
+    color: #444;
+    padding-right: 24px;
+    position: relative;
+  }
+  .slide-5 .partner-list li::before {
+    content: "—";
+    position: absolute;
+    right: 0;
+    color: #c97b63;
+  }
+
+  /* ── SLIDE INSTALL INTRO ── */
+  .slide-install-intro { flex-direction: row; align-items: center; justify-content: center; gap: 72px; padding: 60px 100px; }
+  .slide-install-intro img {
+    height: 360px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    flex-shrink: 0;
+    mix-blend-mode: multiply;
+  }
+  .install-intro-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 500px;
+  }
+  .install-intro-title {
+    font-size: clamp(32px, 4vw, 54px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.15;
+  }
+  .install-intro-sub {
+    font-size: clamp(16px, 1.8vw, 22px);
+    font-weight: 300;
+    color: #888;
+    line-height: 1.6;
+  }
+  .install-intro-terminal {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 24px;
+    background: #f7f4f1;
+    border-radius: 12px;
+    border-right: 3px solid #c97b63;
+  }
+  .install-intro-terminal p {
+    font-size: clamp(14px, 1.5vw, 17px);
+    font-weight: 300;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .install-intro-terminal .terminal-joke {
+    font-size: clamp(13px, 1.4vw, 16px);
+    color: #aaa;
+    font-style: italic;
+  }
+  .install-intro-wink {
+    font-size: 13px;
+    color: #bbb;
+    font-style: italic;
+  }
+
+  /* ── SLIDES 6-8 — Terminal ── */
+  .slide-6 { flex-direction: column; align-items: center; justify-content: center; gap: 48px; }
+  .os-split {
+    display: flex;
+    gap: 60px;
+    align-items: stretch;
+  }
+  .os-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 36px 48px;
+    border-radius: 16px;
+    min-width: 220px;
+    cursor: default;
+  }
+  .os-card.mac { background: #f7f4f1; }
+  .os-card.win { background: #f0f4f8; }
+  .os-icon { font-size: 48px; }
+  .os-name { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .os-desc { font-size: 14px; font-weight: 300; color: #999; text-align: center; line-height: 1.6; }
+  .slide-6-title { font-size: clamp(28px, 3.5vw, 46px); font-weight: 900; color: #1a1a1a; }
+  .slide-6-sub { font-size: 16px; font-weight: 300; color: #aaa; }
+  .requirements {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 40px;
+    background: #f7f4f1;
+    border-radius: 12px;
+  }
+  .req-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #bbb;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .req-items { display: flex; gap: 32px; align-items: center; }
+  .req-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #666;
+  }
+  .req-item .req-icon { font-size: 16px; }
+  .req-item strong { font-weight: 600; color: #444; }
+  .req-note { font-size: 12px; color: #bbb; font-style: italic; margin-right: 4px; }
+
+  /* Handwritten annotation */
+  .handwritten-note {
+    position: absolute;
+    bottom: 80px;
+    left: 60px;
+    font-family: 'Heebo', cursive;
+    font-size: 15px;
+    font-weight: 300;
+    color: #c97b63;
+    transform: rotate(-2deg);
+    max-width: 260px;
+    line-height: 1.6;
+    border-bottom: 1.5px solid #e8c4b8;
+    padding-bottom: 4px;
+  }
+  .handwritten-note::before {
+    content: "↑";
+    display: block;
+    font-size: 20px;
+    margin-bottom: 2px;
+    opacity: 0.6;
+  }
+
+  /* Slide 7 — rebuild */
+  .slide-7 { flex-direction: column; align-items: stretch; justify-content: center; gap: 28px; padding: 48px 120px; }
+  .s7-header { display: flex; align-items: baseline; justify-content: space-between; gap: 40px; }
+  .s7-title { font-size: clamp(24px, 2.8vw, 36px); font-weight: 900; color: #1a1a1a; white-space: nowrap; }
+  .s7-note { font-size: 13px; font-weight: 300; color: #c97b63; font-style: italic; text-align: left; max-width: 280px; transform: rotate(-1deg); }
+  .s7-cols { display: flex; gap: 0; align-items: flex-start; }
+  .s7-col { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 0 40px; }
+  .s7-col:first-child { padding-right: 0; }
+  .s7-col:last-child { padding-left: 0; }
+  .s7-divider { width: 1px; background: #e8e4df; align-self: stretch; margin: 0 8px; }
+  .s7-os-title { font-size: 18px; font-weight: 900; color: #1a1a1a; }
+  .s7-instruction { font-size: 13px; font-weight: 300; color: #888; }
+  .s7-alt-note { font-size: 11px; color: #bbb; font-style: italic; }
+  /* spotlight */
+  .s7-spotlight { background: rgba(255,255,255,0.95); border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,0.14); overflow: hidden; }
+  .s7-spotlight-bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #eee; font-size: 16px; }
+  .s7-spotlight-text { color: #1a1a1a; font-size: 16px; }
+  .s7-spotlight-result { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #007aff; color: white; font-size: 14px; font-family: -apple-system, sans-serif; }
+  .s7-spotlight-result small { font-size: 11px; opacity: 0.8; }
+  /* mac terminal */
+  .s7-terminal { background: #1e1e1e; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+  .s7-terminal-bar { background: #323232; padding: 8px 12px; display: flex; align-items: center; gap: 6px; }
+  .s7-terminal-title { font-size: 11px; color: #888; margin: 0 auto; font-family: -apple-system, sans-serif; }
+  .s7-terminal-body { padding: 12px 16px; font-family: 'Menlo', monospace; font-size: 13px; color: #e0e0e0; direction: ltr; text-align: left; }
+  /* windows terminal */
+  .s7-win-terminal { background: #0c0c0c; border-radius: 6px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .s7-win-bar { background: #1a1a2e; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; }
+  .s7-win-title { font-size: 11px; color: #aaa; font-family: -apple-system, sans-serif; }
+  .s7-win-btns { font-size: 11px; color: #666; letter-spacing: 4px; }
+  .s7-win-body { padding: 12px 16px; }
+  .s7-win-line { font-family: 'Consolas', monospace; font-size: 12px; color: #ccc; direction: ltr; text-align: left; line-height: 1.7; }
+
+  /* Spotlight mock */
+  .spotlight-mock {
+    width: 100%;
+    max-width: 320px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+  .spotlight-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .spotlight-icon { font-size: 18px; color: #999; }
+  .spotlight-text { font-size: 20px; color: #1a1a1a; font-family: -apple-system, 'Heebo', sans-serif; font-weight: 400; flex: 1; }
+  .spotlight-cursor { display: inline-block; width: 2px; height: 20px; background: #007aff; margin-right: 1px; animation: blink 1s step-end infinite; }
+  .spotlight-result {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #007aff;
+    color: white;
+  }
+  .spotlight-result-icon { font-size: 28px; }
+  .spotlight-result-text { font-size: 15px; font-family: -apple-system, 'Heebo', sans-serif; }
+  .spotlight-result-text strong { display: block; font-weight: 600; }
+  .spotlight-result-text span { font-size: 12px; opacity: 0.8; }
+
+  /* Terminal mock */
+  .terminal-mock {
+    width: 100%;
+    max-width: 320px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    overflow: hidden;
+    font-family: 'SF Mono', 'Menlo', monospace;
+  }
+  .terminal-titlebar {
+    background: #323232;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .terminal-title-text { font-size: 12px; color: #888; margin-right: auto; margin-left: auto; font-family: -apple-system, 'Heebo', sans-serif; }
+  .terminal-body { padding: 16px 20px; }
+  .terminal-line { font-size: 13px; color: #e0e0e0; line-height: 1.8; direction: ltr; text-align: left; }
+  .terminal-prompt { color: #28c840; }
+  .terminal-cursor { display: inline-block; width: 8px; height: 14px; background: #e0e0e0; margin-right: 2px; animation: blink 1s step-end infinite; vertical-align: middle; }
+
+  /* ── SLIDES 8-10 — Installation ── */
+
+  /* Slide 8 — Git for Windows */
+  .slide-8 { flex-direction: column; align-items: center; justify-content: center; gap: 36px; padding: 60px 140px; }
+  .s8-mac-skip { background: #f7f4f1; border-right: 4px solid #1a1a1a; padding: 12px 20px; font-size: 15px; font-weight: 700; color: #1a1a1a; border-radius: 8px; width: 100%; max-width: 620px; text-align: right; }
+  .s8-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.15em; color: #c97b63; text-transform: uppercase; }
+  .s8-title { font-size: clamp(28px, 3.5vw, 46px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s8-steps { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 620px; }
+  .s8-step { display: flex; align-items: flex-start; gap: 20px; padding: 18px 24px; background: #f7f4f1; border-radius: 12px; }
+  .s8-step-num { font-size: 22px; font-weight: 900; color: #c97b63; flex-shrink: 0; line-height: 1; }
+  .s8-step-content { display: flex; flex-direction: column; gap: 4px; }
+  .s8-step-title { font-size: 16px; font-weight: 700; color: #1a1a1a; }
+  .s8-step-desc { font-size: 13px; font-weight: 300; color: #888; line-height: 1.6; }
+  .s8-step-code { font-family: 'Menlo', monospace; font-size: 13px; color: #c97b63; background: #fff; padding: 4px 10px; border-radius: 6px; margin-top: 4px; direction: ltr; display: inline-block; }
+  .s8-funny { font-size: 13px; color: #bbb; font-style: italic; text-align: center; }
+
+  /* Slide 9 — Installation command */
+  .slide-9 { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px; }
+  .slide-9 img { height: 300px; width: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07)); flex-shrink: 0; mix-blend-mode: multiply; }
+  .s9-content { display: flex; flex-direction: column; gap: 24px; max-width: 520px; }
+  .s9-title { font-size: clamp(28px, 3.2vw, 42px); font-weight: 900; color: #1a1a1a; line-height: 1.2; }
+  .s9-annotation { font-size: 13px; color: #c97b63; font-style: italic; transform: rotate(-1deg); display: inline-block; }
+  .s9-troubleshoot { margin-top: 16px; font-size: 13px; color: #7a6a5a; background: #f9f3ee; border: 1px solid #e8d9cc; border-radius: 8px; padding: 10px 14px; line-height: 1.6; }
+  .s9-troubleshoot a { color: #c97b63; text-decoration: underline; }
+  .s9-os-block { display: flex; flex-direction: column; gap: 8px; }
+  .s9-os-label { font-size: 12px; font-weight: 700; color: #aaa; letter-spacing: 0.1em; text-transform: uppercase; }
+  .s9-cmd { background: #1e1e1e; border-radius: 8px; padding: 14px 18px; font-family: 'Menlo', monospace; font-size: 12px; color: #a8ff78; direction: ltr; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .s9-cmd-text { flex: 1; line-height: 1.5; word-break: break-all; }
+  .s9-cmd-note { font-size: 11px; color: #666; font-family: 'Heebo', sans-serif; direction: rtl; flex-shrink: 0; }
+  .s9-steps-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .s9-mini-step { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 400; color: #555; background: #f7f4f1; padding: 6px 12px; border-radius: 20px; }
+  .s9-mini-num { font-weight: 900; color: #c97b63; font-size: 14px; }
+  .s9-arrow { color: #ccc; font-size: 14px; }
+  .s9-win-note { font-size: 12px; color: #aaa; font-style: italic; }
+
+  /* Slide 10 — First run */
+  .slide-10 { flex-direction: column; align-items: center; justify-content: center; gap: 32px; padding: 60px 120px; }
+  .s10-title { font-size: clamp(24px, 3vw, 40px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s10-title code { font-family: 'Menlo', monospace; color: #c97b63; background: #f7f4f1; padding: 2px 10px; border-radius: 6px; font-size: 0.9em; }
+  .s10-subtitle { font-size: 15px; font-weight: 300; color: #888; text-align: center; line-height: 1.6; }
+  .s10-terminal { background: #1e1e1e; border-radius: 10px; box-shadow: 0 16px 48px rgba(0,0,0,0.28); overflow: hidden; width: 100%; max-width: 600px; }
+  .s10-bar { background: #323232; padding: 10px 14px; display: flex; align-items: center; gap: 6px; }
+  .s10-bar-title { font-size: 12px; color: #888; margin: 0 auto; font-family: -apple-system, sans-serif; }
+  .s10-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 6px; }
+  .s10-line { font-family: 'Menlo', monospace; font-size: 13px; direction: ltr; text-align: left; line-height: 1.7; }
+  .s10-line.prompt { color: #e0e0e0; }
+  .s10-line.response { color: #a8ff78; }
+  .s10-line.dim { color: #555; }
+  .s10-choice { color: #fff; background: #4a4a4a; padding: 1px 8px; border-radius: 4px; font-size: 12px; }
+  .s10-annotation-inline { font-family: 'Heebo', sans-serif; font-size: 12px; color: #c97b63; font-style: italic; padding-right: 24px; direction: rtl; text-align: right; margin-top: -2px; }
+  .s10-note { font-size: 16px; color: #c97b63; font-style: italic; font-weight: 300; text-align: center; }
+  .win-terminal-mock {
+    width: 100%;
+    max-width: 320px;
+    background: #0c0c0c;
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    overflow: hidden;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+  }
+  .win-titlebar {
+    background: #1a1a2e;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .win-title-text { font-size: 12px; color: #aaa; font-family: -apple-system, 'Heebo', sans-serif; }
+  .win-controls { margin-right: auto; display: flex; gap: 4px; }
+  .win-btn { font-size: 11px; color: #888; padding: 0 8px; cursor: default; }
+  .win-body { padding: 16px 20px; }
+  .win-line { font-size: 13px; color: #cccccc; line-height: 1.8; direction: ltr; text-align: left; }
+  .win-prompt { color: #4ec9b0; }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* Download cards — Slide 7 */
+  .s7-dl-card { display: flex; flex-direction: column; gap: 12px; padding: 20px 24px; border-radius: 12px; }
+  .mac-card { background: #f7f4f1; }
+  .win-card { background: #f0f4f8; }
+  .s7-dl-step { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; font-weight: 400; color: #333; line-height: 1.5; }
+  .s7-dl-num { font-weight: 900; color: #c97b63; font-size: 16px; flex-shrink: 0; line-height: 1.3; }
+
+  /* Desktop App first session — Slide 10 */
+  .s10-app-flow { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 580px; }
+  .s10-flow-step { display: flex; align-items: center; gap: 16px; padding: 14px 20px; background: #f7f4f1; border-radius: 10px; }
+  .s10-flow-num { font-size: 20px; font-weight: 900; color: #c97b63; flex-shrink: 0; }
+  .s10-flow-text { font-size: 14px; color: #333; line-height: 1.5; }
+  .s10-flow-text strong { color: #1a1a1a; }
+  .s10-permission-note { font-size: 13px; color: #c97b63; font-style: italic; text-align: center; margin-top: 8px; }
+
+  /* Desktop App features — Slide 14 */
+  .s14-desktop-cols { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 620px; }
+  .s14-feature { display: flex; align-items: flex-start; gap: 16px; padding: 18px 24px; background: #f7f4f1; border-radius: 12px; }
+  .s14-feature-icon { font-size: 28px; flex-shrink: 0; }
+  .s14-feature-body { display: flex; flex-direction: column; gap: 4px; }
+  .s14-feature-title { font-size: 17px; font-weight: 700; color: #1a1a1a; }
+  .s14-feature-desc { font-size: 13px; font-weight: 300; color: #777; line-height: 1.6; }
+
+  /* ── SLIDE VSCODE-DL — הורדת VS Code ── */
+  .slide-vscode-dl { flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 40px 60px 100px; }
+  .vscode-dl-logo { font-size: 64px; }
+  .vscode-dl-title { font-size: clamp(32px, 4vw, 56px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .vscode-dl-sub { font-size: clamp(16px, 1.8vw, 22px); font-weight: 300; color: #666; text-align: center; }
+  .vscode-dl-steps { font-size: clamp(18px, 2vw, 26px); font-weight: 700; color: #1a1a1a; text-align: center; }
+  .vscode-dl-link { font-size: clamp(14px, 1.5vw, 18px); color: #c97b63; text-decoration: none; border-bottom: 1px solid #c97b63; padding-bottom: 2px; }
+  .vscode-dl-link:hover { opacity: 0.75; }
+
+  /* ── SLIDE BYE ── */
+  .slide-bye { flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+  .bye-title { font-size: clamp(40px, 5.5vw, 76px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .bye-img { height: clamp(220px, 28vh, 360px); width: auto; }
+
+  /* ── SLIDE OUTRO — זה מה שיצא ── */
+  .slide-outro { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 60px 80px 90px; }
+  .outro-text { display: flex; flex-direction: column; gap: 20px; max-width: 420px; flex-shrink: 0; }
+  .outro-title { font-size: clamp(28px, 3.2vw, 46px); font-weight: 900; color: #1a1a1a; line-height: 1.2; }
+  .outro-sub { font-size: clamp(14px, 1.5vw, 20px); font-weight: 300; color: #c97b63; line-height: 1.6; }
+  .outro-next { font-size: clamp(12px, 1.2vw, 16px); font-weight: 400; color: #555; line-height: 1.8; border-right: 3px solid #e8d8ce; padding-right: 14px; }
+  .outro-group { font-size: clamp(12px, 1.2vw, 16px); font-weight: 400; color: #333; line-height: 1.8; }
+  .outro-group strong { color: #c97b63; font-weight: 700; }
+  .outro-preview { flex-shrink: 0; width: 340px; height: 430px; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.13); position: relative; }
+  .outro-preview iframe { width: 720px; height: 910px; border: none; transform: scale(0.472); transform-origin: top right; pointer-events: none; }
+
+  /* ── SLIDE PROMPT ── */
+  .slide-prompt { flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 32px 60px 90px; }
+  .prompt-tag { font-size: 12px; font-weight: 700; color: #c97b63; letter-spacing: 0.14em; text-transform: uppercase; }
+  .prompt-box { background: #f9f4f0; border: 1.5px solid #e8d8ce; border-radius: 14px; padding: 20px 28px; max-width: 740px; width: 100%; max-height: 42vh; overflow-y: auto; text-align: right; direction: rtl; font-size: clamp(11px, 1.2vw, 15px); font-family: 'Heebo', sans-serif; color: #333; line-height: 1.8; white-space: pre-wrap; }
+  .prompt-copy-btn { background: #c97b63; color: white; border: none; border-radius: 30px; padding: 10px 32px; font-size: clamp(13px, 1.3vw, 17px); font-family: 'Heebo', sans-serif; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+  .prompt-copy-btn:hover { opacity: 0.85; }
+  .prompt-copy-btn.copied { background: #7aaa7a; }
+
+  /* ── SLIDE LOGIN ── */
+  .slide-login { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 90px; }
+  .login-text { display: flex; flex-direction: column; gap: 14px; max-width: 340px; }
+  .login-title { font-size: clamp(26px, 3vw, 42px); font-weight: 900; color: #1a1a1a; line-height: 1.2; }
+  .login-body { font-size: clamp(13px, 1.3vw, 17px); font-weight: 300; color: #555; line-height: 1.8; }
+  .login-cta { font-size: clamp(14px, 1.4vw, 19px); font-weight: 700; color: #c97b63; }
+  .login-mockup-wrap { width: 420px; height: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.18); flex-shrink: 0; position: relative; }
+  .login-mockup-wrap iframe { width: 860px; height: 580px; border: none; transform: scale(0.488); transform-origin: top left; }
+
+  /* ── SLIDE MISSION ── */
+  .slide-mission { flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 40px 180px 90px; overflow: hidden; }
+  .mission-title { font-size: clamp(32px, 4vw, 56px); font-weight: 900; color: #1a1a1a; text-align: center; width: 100%; line-height: 1.2; position: relative; z-index: 1; }
+  .mission-subtitle { font-size: clamp(16px, 1.8vw, 26px); font-weight: 700; color: #c97b63; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .mission-body { font-size: clamp(12px, 1.1vw, 15px); font-weight: 300; color: #555; text-align: center; line-height: 1.9; max-width: 640px; width: 100%; position: relative; z-index: 1; }
+  .mission-hint { font-size: clamp(12px, 1.1vw, 15px); color: #c97b63; font-weight: 400; text-align: center; width: 100%; position: relative; z-index: 1; }
+  .mission-creature { position: absolute; opacity: 0.55; pointer-events: none; }
+  .mission-creature-1 { width: 240px; bottom: 40px; left: 40px; }
+
+  /* ── SLIDES EXTENSIONS ── */
+  .slide-ext { flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px 60px 90px; }
+  .ext-title { font-size: clamp(20px, 2.4vw, 34px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .ext-sub { font-size: clamp(13px, 1.4vw, 18px); font-weight: 300; color: #c97b63; text-align: center; }
+  .ext-img { max-height: 40vh; max-width: 84vw; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+  .ext-step-text { font-size: clamp(14px, 1.6vw, 22px); font-weight: 400; color: #333; text-align: center; }
+  .ext-step-text em { font-style: normal; font-family: monospace; background: #f3ede8; padding: 2px 8px; border-radius: 4px; }
+
+  /* ── SLIDE VSCODE-INTRO — היכרות עם VS Code ── */
+  .slide-vscode-intro { flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 32px 60px 90px; }
+  .vscode-intro-title { font-size: clamp(24px, 3vw, 40px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .vscode-intro-sub { font-size: clamp(14px, 1.6vw, 20px); font-weight: 300; color: #555; text-align: center; }
+  .vscode-intro-img-wrap { position: relative; display: inline-block; }
+  .vscode-intro-img-wrap img { max-height: 42vh; max-width: 85vw; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); display: block; }
+  .vscode-intro-arrow { position: absolute; top: 12%; left: 18%; display: flex; flex-direction: row; align-items: center; gap: 0; }
+  .vscode-intro-arrow-label { display: none; }
+  .vscode-intro-arrow-line { height: 2px; width: 40px; background: #c97b63; }
+  .vscode-intro-arrow-tip { width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 12px solid #c97b63; }
+  .vscode-intro-body { font-size: clamp(12px, 1.3vw, 16px); font-weight: 300; color: #777; text-align: center; line-height: 1.7; max-width: 680px; }
+
+  /* ── SLIDE 14 — Terminal vs VS Code ── */
+  .slide-14 { flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 48px 80px; }
+  .s14-supertitle { font-size: 13px; font-weight: 700; color: #c97b63; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
+  .s14-title { font-size: clamp(24px, 2.8vw, 38px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s14-cols { display: flex; gap: 40px; align-items: flex-start; width: 100%; }
+  .s14-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; background: #f7f4f1; border-radius: 16px; padding: 28px 24px; }
+  .s14-col-title { font-size: 17px; font-weight: 700; color: #1a1a1a; text-align: center; }
+  .s14-col-def { font-size: 12px; color: #999; font-style: italic; text-align: center; line-height: 1.5; }
+  .s14-col img { height: 110px; mix-blend-mode: multiply; }
+  .s14-col-body { font-size: 13px; font-weight: 300; color: #555; line-height: 1.7; text-align: center; }
+  .s14-col-tag { font-size: 11px; font-weight: 700; color: #c97b63; background: #fdf0eb; padding: 4px 12px; border-radius: 20px; }
+  .s14-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .s14-table th { font-size: 11px; font-weight: 700; color: #bbb; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; text-align: center; border-bottom: 2px solid #eee; }
+  .s14-table th:first-child { text-align: right; }
+  .s14-table td { padding: 10px 16px; text-align: center; border-bottom: 1px solid #f0ece8; color: #444; }
+  .s14-table td:first-child { text-align: right; font-weight: 500; color: #1a1a1a; }
+  .s14-table tr:last-child td { border-bottom: none; }
+  .s14-yes { color: #28a745; font-weight: 600; }
+  .s14-no { color: #ccc; }
+  .s14-closing { font-size: 14px; font-weight: 300; color: #aaa; text-align: center; font-style: italic; }
+
+  /* ── SLIDE 13 — Tips ── */
+  .slide-13 { flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 48px 100px; }
+  .s13-title { font-size: clamp(26px, 3vw, 40px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s13-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    width: 100%;
+    max-width: 860px;
+  }
+  .s13-tip {
+    background: #f7f4f1;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .s13-tip-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .s13-tip-title span {
+    color: #c97b63;
+    margin-left: 6px;
+  }
+  .s13-tip-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.6;
+  }
+  .s13-tip-img {
+    height: 64px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    margin-bottom: 4px;
+  }
+  .s13-wink {
+    font-size: 13px;
+    color: #bbb;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── SLIDE 11 — Pricing ── */
+  .slide-11 { flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 40px 80px; background: #f5f2ee; }
+  .s11-title { font-size: clamp(22px, 2.8vw, 36px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s11-account-note { font-size: 13px; font-weight: 400; color: #888; background: #fff; padding: 8px 20px; border-radius: 20px; }
+  .pricing-cards { display: flex; gap: 20px; align-items: stretch; }
+  .pricing-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    border: 1.5px solid transparent;
+  }
+  .pricing-card.highlighted {
+    border-color: #c97b63;
+    box-shadow: 0 8px 32px rgba(201,123,99,0.15);
+  }
+  .pricing-card.dimmed { opacity: 0.5; }
+  .pricing-plan { font-size: 22px; font-weight: 900; color: #1a1a1a; }
+  .pricing-tagline { font-size: 12px; color: #999; font-weight: 300; }
+  .pricing-price { font-size: 28px; font-weight: 900; color: #1a1a1a; margin-top: 4px; }
+  .pricing-price-note { font-size: 11px; color: #aaa; font-weight: 300; line-height: 1.4; }
+  .pricing-divider { height: 1px; background: #f0ede9; margin: 4px 0; }
+  .pricing-cc { font-size: 12px; font-weight: 700; }
+  .pricing-cc.yes { color: #2d8a4e; }
+  .pricing-cc.no { color: #bbb; }
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    right: 50%;
+    transform: translateX(50%);
+    background: #c97b63;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .s11-arrow-note {
+    font-size: 14px;
+    color: #c97b63;
+    font-style: italic;
+    text-align: center;
+  }
+  .s11-warning-note {
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    margin-top: 8px;
+    background: #fdf8f5;
+    border: 1px solid #e8ddd6;
+    border-radius: 8px;
+    padding: 8px 16px;
+  }
+
+  /* ── SLIDE 12 — Trust folder ── */
+  .slide-12 { flex-direction: row; align-items: center; justify-content: center; gap: 72px; padding: 60px 100px; }
+  .slide-12 img {
+    height: 360px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    flex-shrink: 0;
+    mix-blend-mode: multiply;
+  }
+  .s12-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 480px;
+  }
+  .s12-body {
+    font-size: clamp(16px, 1.9vw, 22px);
+    font-weight: 300;
+    color: #444;
+    line-height: 1.8;
+  }
+  .s12-body strong {
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .s12-trust-box {
+    background: #1e1e1e;
+    border-radius: 10px;
+    padding: 16px 22px;
+    font-family: 'Menlo', monospace;
+    font-size: clamp(13px, 1.5vw, 16px);
+    color: #a8ff78;
+    direction: ltr;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .s12-wink {
+    font-size: 13px;
+    color: #bbb;
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .s12-where {
+    font-size: clamp(13px, 1.4vw, 16px);
+    font-weight: 300;
+    color: #666;
+    line-height: 1.7;
+  }
+  .s12-where strong { font-weight: 700; color: #1a1a1a; }
+  .s12-warning {
+    background: #fff8f6;
+    border-right: 3px solid #c97b63;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: clamp(12px, 1.3vw, 15px);
+    font-weight: 300;
+    color: #555;
+    line-height: 1.7;
+  }
+  .s12-warning strong { font-weight: 700; color: #c97b63; }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 100;
+  }
+  .nav button {
+    background: none;
+    border: 1.5px solid #d0ccc8;
+    color: #888;
+    font-family: 'Heebo', sans-serif;
+    font-size: 13px;
+    padding: 8px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav button:hover {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+  }
+  .nav .counter {
+    font-size: 12px;
+    color: #bbb;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  /* ── SLIDE NUMBER ── */
+  .slide-number {
+    position: fixed;
+    top: 28px;
+    left: 40px;
+    font-size: 12px;
+    color: #ccc;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 680px) {
+    .slide { padding: 24px 20px 80px; overflow-y: auto; align-items: flex-start; justify-content: flex-start; flex-direction: column !important; gap: 20px !important; }
+
+    /* Row layouts → column */
+    .slide-2, .slide-4, .slide-5, .slide-install-intro,
+    .slide-9, .slide-login, .slide-outro, .slide-7 .s7-cols { flex-direction: column !important; gap: 24px !important; }
+
+    /* Images - smaller */
+    .slide img, .slide-2 img, .slide-4 img, .slide-5 img,
+    .slide-install-intro img, .slide-9 img { height: 160px !important; width: auto; align-self: center; }
+    .bye-img { height: 180px !important; }
+    .character img { height: 160px !important; }
+
+    /* Characters side by side → wrap */
+    .characters { gap: 24px !important; flex-wrap: wrap; }
+
+    /* Safety grid → 1 col */
+    .safety-grid { grid-template-columns: 1fr !important; }
+    .safety-raccoon { display: none; }
+    .slide-safety { padding: 24px 20px 80px !important; }
+
+    /* OS split → column */
+    .os-split { flex-direction: column !important; gap: 16px !important; }
+    .os-card { padding: 20px 24px !important; }
+
+    /* Slide 7 cols → column */
+    .s7-cols { flex-direction: column !important; }
+    .s7-col { padding: 0 !important; }
+    .s7-divider { display: none; }
+    .slide-7 { padding: 24px 20px 80px !important; }
+
+    /* Slide 8 */
+    .slide-8 { padding: 24px 20px 80px !important; }
+
+    /* Outro preview → hide iframe */
+    .outro-preview { display: none; }
+    .outro-text { max-width: 100% !important; }
+
+    /* Login mockup */
+    .login-mockup-wrap { display: none; }
+    .login-text { max-width: 100% !important; }
+
+    /* Mission */
+    .slide-mission { padding: 24px 20px 80px !important; }
+
+    /* Slide 10 */
+    .slide-10 { padding: 24px 20px 80px !important; }
+
+    /* Prompt */
+    .slide-prompt { padding: 24px 20px 80px !important; }
+    .prompt-box { max-height: 55vh; font-size: 13px !important; }
+
+    /* Nav buttons - bigger touch targets */
+    .nav button { padding: 12px 28px; font-size: 15px; }
+    .nav { gap: 20px; }
+
+    /* Slide number */
+    .slide-number { display: none; }
+
+    /* Slide 4/5 text max-width */
+    .typo-slide, .partner-text, .install-intro-text, .s9-content { max-width: 100% !important; }
+
+    /* Handwritten note */
+    .handwritten-note { position: relative; bottom: auto; left: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- SLIDE 1 — Title -->
+  <div class="slide slide-1 active">
+    <h1>המדריך השלם<br>לקלוד <span>קוד</span></h1>
+    <div class="subtitle">לאנשים שאין להם זמן לקרוא מדריכים שלמים.</div>
+  </div>
+
+  <!-- SLIDE 2 — Definition -->
+  <div class="slide slide-2">
+    <div class="definition-text">
+      <div class="def-title">קלוד קוד, בתכלס.</div>
+      <div class="def-question">מה זה בעצם?</div>
+      <h2>זה ההבדל בין מישהו שיגיד לך<br>"הנה מה צריך לעשות"<br>לבין מישהו שיגיד<br>"כבר עשיתי."</h2>
+      <div class="def-punch">קלוד קוד הוא האופציה השנייה.</div>
+      <div class="def-body">
+        הוא לא רק מסביר.<br>
+        הוא לא רק מייעץ.<br>
+        הוא ממש עובד על הקבצים שלך, בתוך הפרויקט, בזמן אמת.
+      </div>
+    </div>
+    <img src="תמונות/preview_slide2.png" alt="Done Creature">
+  </div>
+
+  <!-- SLIDE 3 — What is Claude Code -->
+  <div class="slide slide-3" style="flex-direction:column;gap:48px;">
+    <div class="top-text">
+      <h2>ChatGPT היא חברה שאת <span>מתקשרת</span> אליה.<br>קלוד קוד היא חברה שעברה <span>אליך.</span></h2>
+    </div>
+
+    <div class="characters">
+
+      <div class="character">
+        <img src="תמונות/preview_slide3_chatgpt.png" alt="ChatGPT">
+        <div class="character-label">
+          <div class="name">ChatGPT</div>
+          <div class="desc">עונה בצ׳אט<br>לא רואה את הקבצים שלך<br>נשארת בבית שלה</div>
+        </div>
+      </div>
+
+      <div class="vs-divider">VS</div>
+
+      <div class="character">
+        <img src="תמונות/preview_slide3_claude.png" alt="Claude Code">
+        <div class="character-label">
+          <div class="name" style="color:#c97b63;">קלוד קוד</div>
+          <div class="desc">יושבת בתוך הקומפיוטר שלך<br>רואה את התיקיות<br>עושה דברים בפועל</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — למי זה מתאים -->
+  <div class="slide slide-4">
+    <img src="תמונות/preview_lost_woman.png" alt="Lost Woman">
+    <div class="typo-slide">
+      <div class="typo-title">זה בשבילך אם...</div>
+      <ul class="typo-list">
+        <li>יש לך אתר שלא עודכן מאז הניינטיז.</li>
+        <li>תיק עבודות שכמעט מוכן כבר שנה.</li>
+        <li>ניוזלטר ששרד שני מיילים ונעלם.</li>
+        <li>בלוג שנפתח ברגע של השראה ונשכח יום אחרי.</li>
+      </ul>
+      <div class="typo-wink">בקיצור — יש לך רעיון, פלטפורמה, אתר, עמוד, תיק עבודות, בלוג, ניוזלטר, אוטומציה או פרויקט דיגיטלי שכבר קיים, כמעט קיים, או פשוט היה אמור כבר לקרות.</div>
+    </div>
+  </div>
+
+
+  <!-- SLIDE 5 — שותף לא מחליף -->
+  <div class="slide slide-5">
+    <div class="partner-text">
+      <div class="partner-title">כמו עוזרת מאוד מוכשרת<br>שצריכה אותך.</div>
+      <div class="partner-body">היא תעשה הכל. ממש הכל.<br>רק תגידי לה מה אתם עושים פה.</div>
+      <div class="partner-label">זה השיתוף פעולה:</div>
+      <ul class="partner-list">
+        <li>את נותנת כיוון</li>
+        <li>היא מביאה תוצאה</li>
+        <li>את מדייקת</li>
+        <li>את מחליטה מה נשאר</li>
+      </ul>
+    </div>
+    <img src="תמונות/fluffy_helper.png" alt="Fluffy Helper">
+  </div>
+
+  <!-- SLIDE SAFETY — כללי זהירות -->
+  <div class="slide slide-safety">
+    <img src="תמונות/preview_raccoon.png" class="safety-raccoon" alt="">
+    <div class="safety-title">כללי זהירות</div>
+    <div class="safety-sub">או: איך לא להפוך את שיעור ההיכרות לאירוע תמיכה טכנית</div>
+    <div class="safety-grid">
+      <div class="safety-item"><span class="num">①</span><span>שלב שלב. לא שולחות אותו למשימה עצמאית כאילו הוא כבר מכיר את המשפחה</span></div>
+      <div class="safety-item"><span class="num">②</span><span>לא מתקינות דברים שלא ברור מה הם. מסתורי — זה עדיין לא אישיות</span></div>
+      <div class="safety-item"><span class="num">③</span><span>לא נוגעות בקבצים חשובים. לא נוגעות בלב הפתוח של העסק ביום הראשון</span></div>
+      <div class="safety-item"><span class="num">④</span><span>מתחילות בתיקיית תרגול נקייה. מקום שאפשר לטעות בו בלי להזיע</span></div>
+      <div class="safety-item"><span class="num">⑤</span><span>לא מאשרות כל דבר מתוך אמון עיוור. כריזמה היא לא מדיניות אבטחה</span></div>
+      <div class="safety-item"><span class="num">⑥</span><span>אם משהו לא ברור — עוצרות ושואלות. לא מהנהנות לטרמינל בנימוס ומקווות לטוב</span></div>
+      <div class="safety-item"><span class="num">⑦</span><span>זה כלי חזק. לא קסם קטן וחמוד בלי השלכות</span></div>
+    </div>
+    <div class="safety-footer">סקרנות, בהחלט.<br><span>הרפתקנות עם הרשאות — קצת פחות.</span></div>
+  </div>
+
+  <!-- SLIDE INSTALL INTRO — מתקינות את קלוד קוד -->
+  <div class="slide slide-install-intro">
+    <div class="install-intro-text">
+      <div class="install-intro-title">מתקינות את<br>קלוד קוד.</div>
+      <div class="install-intro-sub">הגיע הרגע.<br>אתן מתרגשות? כי אני כן.</div>
+      <div class="install-intro-terminal">
+        <p>הפעם — אין טרמינל.</p>
+        <p class="terminal-joke">מורידות אפליקציה. כמו וואייז. רק שזה בונה לכן דברים.</p>
+        <p>ממשק גרפי, כפתורים, וקלוד שמחכה שתאשרו<br>כל שינוי לפני שהוא נוגע בכלום.<br>שלכן. לגמרי.</p>
+      </div>
+    </div>
+    <img src="תמונות/drumming_goat.png" alt="Drumming Goat">
+  </div>
+
+  <!-- SLIDE 11 — חשבון ומנוי -->
+  <div class="slide slide-11">
+    <div class="s11-title">לפני שמריצות — צריך חשבון.</div>
+    <div class="s11-account-note">👤 אין לכן חשבון קלוד? נרשמות קודם ב-claude.ai</div>
+
+    <div class="pricing-cards">
+
+      <div class="pricing-card dimmed">
+        <div class="pricing-plan">Free</div>
+        <div class="pricing-tagline">Try Claude</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-cc no">✗ Claude Code לא כלול</div>
+      </div>
+
+      <div class="pricing-card highlighted">
+        <div class="pricing-badge">מכאן מתחילות ✓</div>
+        <div class="pricing-plan">Pro</div>
+        <div class="pricing-tagline">For everyday productivity</div>
+        <div class="pricing-price">$17</div>
+        <div class="pricing-price-note">לחודש (שנתי) / $20 חודשי</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-cc yes">✓ Claude Code כלול</div>
+      </div>
+
+      <div class="pricing-card dimmed">
+        <div class="pricing-plan">Max</div>
+        <div class="pricing-tagline">Get the most out of Claude</div>
+        <div class="pricing-price">$100+</div>
+        <div class="pricing-price-note">לחודש</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-cc yes">✓ Claude Code כלול</div>
+      </div>
+
+    </div>
+    <div class="s11-arrow-note">Pro מספיק לגמרי להתחיל. אפשר תמיד לשדרג.</div>
+    <div class="s11-warning-note">⚠️ לפני שמתחילות — בדקו שאתן על מנוי <strong>חודשי</strong> ולא שנתי. יותר קל לבטל אם צריך.</div>
+  </div>
+
+  <!-- SLIDE 6 — מק או ווינדאוס -->
+  <div class="slide slide-6">
+    <div class="slide-6-title">קודם כל — עם מה את עובדת?</div>
+    <div class="os-split">
+      <div class="os-card mac">
+        <div class="os-icon">🍎</div>
+        <div class="os-name">Mac</div>
+        <div class="os-desc">יש לך Terminal<br>מובנה במערכת</div>
+      </div>
+      <div class="os-card win">
+        <div class="os-icon">🪟</div>
+        <div class="os-name">Windows</div>
+        <div class="os-desc">יש לך PowerShell<br>מובנה במערכת</div>
+      </div>
+    </div>
+    <div class="requirements">
+      <div class="req-section-label">מה צריך כדי להתחיל</div>
+      <div class="req-items">
+        <div class="req-item"><span class="req-icon">🍎</span> Mac <strong>10.15+</strong> &nbsp;|&nbsp; <span class="req-icon">🪟</span> Windows <strong>10 / 11</strong></div>
+        <div class="req-item"><span class="req-icon">🌐</span> חיבור אינטרנט</div>
+        <div class="req-item"><span class="req-icon">👤</span> חשבון Anthropic <span class="req-note">(יצרנו בשלב הקודם)</span></div>
+        <div class="req-item"><span class="req-icon">💪</span> לא צריך מחשב חזק</div>
+      </div>
+    </div>
+    <div class="slide-6-sub">שניהם עובדים. ממש אותו דבר מכאן.</div>
+  </div>
+
+  <!-- SLIDE 8 — Git for Windows -->
+  <div class="slide slide-8">
+    <div class="s8-mac-skip">🍎 את על מק? את לא צריכה את הסלייד הזה. דלגי.</div>
+    <div class="s8-eyebrow">🪟 רק למשתמשות Windows</div>
+    <div class="s8-title">צעד אחד לפני הכל.<br>רק פעם אחת.</div>
+    <div class="s8-steps">
+      <div class="s8-step">
+        <div class="s8-step-num">1</div>
+        <div class="s8-step-content">
+          <div class="s8-step-title">מתקינות Git for Windows</div>
+          <div class="s8-step-desc">נכנסות לאתר git-scm.com ← מורידות ← מתקינות כמו כל תוכנה רגילה.</div>
+          <div class="s8-step-code">git-scm.com/downloads/win</div>
+        </div>
+      </div>
+      <div class="s8-step">
+        <div class="s8-step-num">2</div>
+        <div class="s8-step-content">
+          <div class="s8-step-title">ממשיכות לסלייד הבא</div>
+          <div class="s8-step-desc">זהו. Git for Windows הוא התשתית שקלוד קוד צריך על ווינדאוס. חד פעמי, לא נוגעות בו יותר.</div>
+        </div>
+      </div>
+    </div>
+    <div class="s8-funny">*(כן, גם זה נראה מסובך יותר ממה שהוא.)*</div>
+  </div>
+
+  <!-- SLIDE 7 — הורדת האפליקציה -->
+  <div class="slide slide-7">
+
+    <div class="s7-header">
+      <div class="s7-title">הורדות. שתי לחיצות. את בפנים. יאללה.</div>
+      <div class="s7-note">לוחצות על הלינק, מורידות, גמרנו. בלי טרמינל. בלי קסמים.</div>
+    </div>
+
+    <div class="s7-cols">
+
+      <!-- MAC -->
+      <div class="s7-col">
+        <div class="s7-os-title">🍎 Mac</div>
+        <div class="s7-instruction">נכנסות ל-claude.com/download ← לוחצות על Mac ← מורידות</div>
+        <div class="s7-dl-card mac-card">
+          <div class="s7-dl-step"><span class="s7-dl-num">1</span> נכנסות ל-<strong>claude.com/download</strong></div>
+          <div class="s7-dl-step"><span class="s7-dl-num">2</span> לוחצות על כפתור ה-Mac (Universal)</div>
+          <div class="s7-dl-step"><span class="s7-dl-num">3</span> גוררות את האפליקציה ל-Applications 🎉</div>
+        </div>
+        <div class="s7-alt-note">Apple Silicon ו-Intel — אותה הורדה. עובד על הכל.</div>
+      </div>
+
+      <div class="s7-divider"></div>
+
+      <!-- WINDOWS -->
+      <div class="s7-col">
+        <div class="s7-os-title">🪟 Windows</div>
+        <div class="s7-instruction">אותו לינק, גרסת Windows, מריצות את ה-exe</div>
+        <div class="s7-dl-card win-card">
+          <div class="s7-dl-step"><span class="s7-dl-num">1</span> נכנסות ל-<strong>claude.com/download</strong></div>
+          <div class="s7-dl-step"><span class="s7-dl-num">2</span> לוחצות על כפתור ה-Windows</div>
+          <div class="s7-dl-step"><span class="s7-dl-num">3</span> מריצות את הקובץ ← כן לכל הודעה שקופצת 🎉</div>
+        </div>
+        <div class="s7-alt-note">⚠️ Windows בלבד: צריך Git מותקן. הסלייד הבא מסביר.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE 9 — ההתקנה -->
+  <div class="slide slide-9">
+    <div class="s9-content">
+      <div class="s9-title">ארבעה צעדים.<br>שבעים אחוז מהם לחיצה על כפתור.</div>
+
+      <div class="s8-steps" style="max-width: 480px;">
+        <div class="s8-step">
+          <div class="s8-step-num">①</div>
+          <div class="s8-step-content">
+            <div class="s8-step-title">מורידות את האפליקציה</div>
+            <div class="s8-step-desc">claude.com/download — בוחרות Mac או Windows</div>
+          </div>
+        </div>
+        <div class="s8-step">
+          <div class="s8-step-num">②</div>
+          <div class="s8-step-content">
+            <div class="s8-step-title">פותחות אותה</div>
+            <div class="s8-step-desc">Mac: Applications / Windows: Start Menu</div>
+          </div>
+        </div>
+        <div class="s8-step">
+          <div class="s8-step-num">③</div>
+          <div class="s8-step-content">
+            <div class="s8-step-title">נכנסות לחשבון Anthropic</div>
+            <div class="s8-step-desc">אותו חשבון שנרשמתן אליו קודם</div>
+          </div>
+        </div>
+        <div class="s8-step">
+          <div class="s8-step-num">④</div>
+          <div class="s8-step-content">
+            <div class="s8-step-title">לוחצות על <strong>Code</strong> למעלה באמצע</div>
+            <div class="s8-step-desc">אם מבקש לשדרג — צריך מנוי. אם מבקש להיכנס שוב — נכנסות ומריצות מחדש.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="s9-annotation">אתן בפנים. כמעט בלי להזיע.</div>
+      <div style="display:inline-flex; align-items:center; gap:10px; background:#fdf0eb; border:1.5px solid #e8c4b8; border-radius:10px; padding:10px 16px; margin-top:4px; font-size:14px; color:#1a1a1a; direction:rtl;">
+        ☝️ אחרי ההתחברות — לוחצות ישר על <strong style="color:#c97b63;">Code</strong> ← לא על Chat, לא על Cowork. Code.
+      </div>
+      <div class="s9-troubleshoot">🛠️ נתקעתן? קורה לכולן. צלמו מסך ושאלו את קלוד — הוא יודע לפתור את זה. <a href="https://claude.ai" target="_blank">claude.ai</a></div>
+    </div>
+    <img src="תמונות/installer_creature.png" alt="Installer Creature">
+  </div>
+
+  <!-- SLIDE 10 — הרגע הראשון -->
+  <div class="slide slide-10" style="flex-direction: row; gap: 60px; padding: 48px 80px; align-items: center;">
+    <img src="תמונות/desktop_app_light.png" alt="Desktop App" style="max-height: 70vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 20px; max-width: 480px;">
+    <div class="s10-title" style="text-align: right;">קלוד לא עושה כלום בלי לשאול קודם.</div>
+    <div class="s10-subtitle" style="text-align: right;">ככה נראה הרגע הראשון שלכן:</div>
+    <div class="s10-app-flow">
+      <div class="s10-flow-step">
+        <div class="s10-flow-num">1</div>
+        <div class="s10-flow-text">בוחרות <strong>Local</strong> — קלוד עובד על הקבצים שלכן ישירות</div>
+      </div>
+      <div class="s10-flow-step">
+        <div class="s10-flow-num">2</div>
+        <div class="s10-flow-text">לוחצות <strong>Select folder</strong> — בוחרות תיקייה לעבוד בה. הוא לא יוצא ממנה.</div>
+      </div>
+      <div class="s10-flow-step">
+        <div class="s10-flow-num">3</div>
+        <div class="s10-flow-text">בוחרות <strong>מודל</strong> — Sonnet לרוב הדברים. Opus לפרויקטים רציניים. Haiku כשממהרות.</div>
+      </div>
+      <div class="s10-flow-step">
+        <div class="s10-flow-num">4</div>
+        <div class="s10-flow-text">כותבות <strong>מה תרצו</strong> — קלוד מציג בדיוק מה הוא הולך לשנות ומחכה לאישור שלכן.</div>
+      </div>
+    </div>
+    <div class="s10-permission-note">כמו קבלן שמראה דוגמת צבע לפני שפותח את הפח. שלכן. לגמרי.</div>
+    </div>
+  </div>
+
+
+  <!-- SLIDE 13 — Tips -->
+  <div class="slide slide-13">
+    <div class="s13-title">כמה כללים שאף אחד לא אמר לך</div>
+    <div class="s13-grid">
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_hebrew.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>01</span> עברית — כן, ממש</div>
+        <div class="s13-tip-body">אין צורך לכתוב באנגלית כדי להישמע רצינית. "please update my website" לא עוזר. זה רק מוזר.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_specific.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>02</span> "תעדכן את האתר" — זה לא משימה</div>
+        <div class="s13-tip-body">זה חלום. תהיי ספציפית: מה, איפה, לאיזה כיוון. ככל שהמשימה יותר ברורה, ככה הוא פחות ממציא.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_why.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>03</span> תגידי לו למה</div>
+        <div class="s13-tip-body">"כי אני רוצה שזה ייראה יותר מקצועי" — זה מידע. הוא עובד אחרת כשהוא מבין את המטרה. בניגוד לקבלן.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_mistake.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>04</span> הוא טעה? תגידי לו. ישר.</div>
+        <div class="s13-tip-body">הוא לא עצבני. הוא לא יתרעם. הוא לא ישלח הודעה פסיבית-אגרסיבית שעות אחר כך. הוא יתקן.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_whatchanged.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>05</span> שאלי "מה שינית?"</div>
+        <div class="s13-tip-body">אחרי פעולה גדולה — שאלה לגיטימית לחלוטין. הוא יספר בדיוק. אתן לא צריכות לנחש ולהרגיש טיפשות.</div>
+      </div>
+
+      <div class="s13-tip">
+        <img src="תמונות/tip_small.png" alt="" class="s13-tip-img">
+        <div class="s13-tip-title"><span>06</span> לא לאכול את הפיל בבת אחת</div>
+        <div class="s13-tip-body">"תבני לי אתר" זו לא משימה, זה פרויקט שלם. "תוסיפי כפתור צור קשר בדף הבית" זו משימה.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+  <!-- SLIDE 14 — Desktop App features -->
+  <div class="slide slide-14" style="flex-direction: row; gap: 60px; padding: 48px 80px; align-items: center;">
+
+    <div style="display: flex; flex-direction: column; gap: 20px; max-width: 480px;">
+    <div class="s14-supertitle">למה אנחנו עובדות עם האפליקציה</div>
+    <div class="s14-title">כי פה קלוד שואל לפני שהוא עושה.</div>
+
+    <div class="s14-desktop-cols">
+      <div class="s14-feature">
+        <div class="s14-feature-icon">👁️</div>
+        <div class="s14-feature-body">
+          <div class="s14-feature-title">רואות הכל לפני אישור</div>
+          <div class="s14-feature-desc">כל שינוי מוצג כ-diff — שורה ירוקה (נוסף) ואדומה (הוסר). מאשרות? קורה. לא? לא קורה.</div>
+          <div class="s14-feature-desc" style="margin-top:6px; font-size:11px; color:#bbb;">* diff = השוואה בין הגרסה הישנה לחדשה. ירוק = נוסף. אדום = נמחק. זהו.</div>
+        </div>
+      </div>
+      <div class="s14-feature">
+        <div class="s14-feature-icon">🖥️</div>
+        <div class="s14-feature-body">
+          <div class="s14-feature-title">ממשק גרפי. בלי שורות שחורות.</div>
+          <div class="s14-feature-desc">כפתורים, תפריטים, preview חי לאפליקציות שבונות. לא צריך לדעת להקליד פקודות.</div>
+        </div>
+      </div>
+      <div class="s14-feature">
+        <div class="s14-feature-icon">🛑</div>
+        <div class="s14-feature-body">
+          <div class="s14-feature-title">Ask permissions — ברירת המחדל</div>
+          <div class="s14-feature-desc">קלוד שואל לפני כל פעולה. אתן מחליטות. לא הוא.</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <img src="תמונות/desktop_app_dark.png" alt="Desktop App Dark" style="max-height: 70vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); flex-shrink: 0;">
+
+  </div>
+
+
+  <!-- SLIDE MISSION — המשימה הראשונה -->
+  <div class="slide slide-mission">
+    <img src="תמונות/preview_unicorn_monkey.png" class="mission-creature mission-creature-1" alt="">
+    <div class="mission-title">המשימה הראשונה שלכם</div>
+    <div class="mission-subtitle">לבקש מקלוד לבנות לכן דף שבועי קטן ב־HTML.</div>
+    <div class="mission-body">
+      כן כן, ממש דף אמיתי שאפשר לפתוח בדפדפן ולהרגיש לרגע האקריות עם טעם טוב.<br><br>
+      הרעיון הוא לא להסתבך, אלא לראות כמה מהר אפשר להפוך כמה שורות של טקסט למשהו ויזואלי, מסודר ויפה.<br><br>
+      אתן פשוט נותנות לו כותרת, כמה משימות לשבוע, אולי שורה קטנה של הערה או מוטו — והוא בונה לכן עמוד קטן וחמוד.<br><br>
+      זאת משימה מעולה להתחלה כי היא גם פשוטה, גם מספקת, וגם מראה לכן מיד שקלוד לא רק "מדבר" — אלא ממש יוצר איתכן משהו שאפשר לראות בעיניים.
+    </div>
+    <div class="mission-hint">הפרומפט המלא — בסלייד הבא ←</div>
+  </div>
+
+  <!-- SLIDE PROMPT — הפרומפט להעתקה -->
+  <div class="slide slide-prompt">
+    <div class="prompt-tag">הפרומפט — העתיקו והתאימו</div>
+    <div class="prompt-box" id="promptText">היי קלוד, זו הפעם הראשונה שלי עם Claude Code ואני מתחילה.
+
+אני רוצה שתיצור לי דף HTML פשוט, יפה ונעים לעין, שמציג את התכנון שלי לשבוע.
+חשוב לי שזה יהיה ברור, מסודר, ועם עיצוב נעים אבל לא מסובך מדי.
+
+תשתמש בתוכן הבא:
+
+כותרת: [כאן לכתוב כותרת]
+כותרת משנה: [כאן לכתוב כותרת משנה]
+
+סגנון ויזואלי: [מינימליסטי / צבעוני / חלומי / אלגנטי / playful]
+(אפשר גם לתאר בחופשי — "משהו עם פרחים", "כחול ים", "כמו ניוזלטר יפה")
+
+המשימות שלי לשבוע:
+- [משימה 1]
+- [משימה 2]
+- [משימה 3]
+- [משימה 4]
+- [משימה 5]
+
+הערה קטנה בתחתית:
+[כאן לכתוב הערה אם רוצים]
+
+בבקשה:
+- תיצור את הכל בתוך קובץ HTML אחד בלבד
+- תוסיף CSS פשוט בתוך אותו קובץ
+- תשמור על עיצוב יפה, ברור וידידותי
+- תשמור את הקובץ בשם week.html
+- אחרי שאתה יוצר את הקובץ, תסביר לי במילים פשוטות מה יצרת
+- תכתוב לי בדיוק איך לפתוח את הקובץ בדפדפן
+
+תניח שאני לא יודעת קוד בכלל.</div>
+    <button class="prompt-copy-btn" onclick="copyPrompt(this)">העתיקי את הפרומפט</button>
+  </div>
+
+  <!-- SLIDE OUTRO — זה מה שיצא -->
+  <div class="slide slide-outro">
+    <div class="outro-text">
+      <div class="outro-title">זה מה שיצא.</div>
+      <div class="outro-sub">הכלי אותו כלי. התוצאה — זה כבר אתן.</div>
+      <div class="outro-next">בשיעורים הבאים נלמד לבקש יותר, לדייק יותר, ולהפתיע את עצמנו יותר מאשר הפעם.</div>
+      <div class="outro-group">קבוצת קלוד החתיך פתוחה (סתם, קלאב קלוד) — לשאלות, לצחוקים, ולכל מה שיצא לכן מהמשימה הראשונה.<br><strong>באמת, תשתפו. זה הבית.</strong></div>
+    </div>
+    <div class="outro-preview">
+      <iframe src="תמונות/week-ella.html" scrolling="no" title="דוגמת פלט"></iframe>
+    </div>
+  </div>
+
+  <!-- SLIDE BYE -->
+  <div class="slide slide-bye">
+    <img src="תמונות/preview_bye_creature.png" class="bye-img" alt="">
+    <div class="bye-title">נתראה בשיעור הבא.</div>
+  </div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prev()">הקודם</button>
+  <span class="counter" id="counter">1 / 2</span>
+  <button onclick="next()">הבא</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+
+  function copyPrompt(btn) {
+    const text = document.getElementById('promptText').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ הועתק!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'העתיקי את הפרומפט'; btn.classList.remove('copied'); }, 2500);
+    });
+  }
+
+  document.getElementById('counter').textContent = `1 / ${slides.length}`;
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') prev();
+    if (e.key === 'ArrowLeft') next();
+  });
+</script>
+</body>
+</html>
