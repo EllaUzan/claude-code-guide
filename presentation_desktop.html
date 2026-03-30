@@ -434,7 +434,8 @@
 
   /* Slide 7 — rebuild */
   .slide-7 { flex-direction: column; align-items: stretch; justify-content: center; gap: 28px; padding: 48px 120px; }
-  .s7-header { display: flex; align-items: baseline; justify-content: space-between; gap: 40px; }
+  .s7-header { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+  .s7-screenshot { max-height: 160px; width: auto; border-radius: 10px; box-shadow: 0 4px 18px rgba(0,0,0,0.13); flex-shrink: 0; }
   .s7-title { font-size: clamp(24px, 2.8vw, 36px); font-weight: 900; color: #1a1a1a; white-space: nowrap; }
   .s7-note { font-size: 13px; font-weight: 300; color: #c97b63; font-style: italic; text-align: left; max-width: 280px; transform: rotate(-1deg); }
   .s7-cols { display: flex; gap: 0; align-items: flex-start; }
@@ -927,6 +928,99 @@
     letter-spacing: 0.1em;
   }
 
+  /* ── NEW SLIDES — Compare / A / B / C / D / E / F ── */
+  .slide-compare { flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 48px 80px 100px; }
+  .compare-title { font-size: clamp(24px, 2.8vw, 38px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .compare-sub { font-size: clamp(13px, 1.4vw, 17px); font-weight: 300; color: #888; text-align: center; }
+  .compare-table { display: flex; gap: 36px; width: 100%; max-width: 900px; }
+  .compare-col { flex: 1; border-radius: 14px; padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .compare-col.terminal { background: #1e1e1e; }
+  .compare-col.desktop { background: #fdf0eb; border: 4px solid #c97b63; box-shadow: 0 10px 36px rgba(201,123,99,0.30); transform: scale(1.15); z-index: 2; }
+  .compare-col.vscode { background: #f0f4f8; }
+  .compare-col-title { font-size: 17px; font-weight: 900; margin-bottom: 4px; }
+  .compare-col.terminal .compare-col-title { color: #a8ff78; }
+  .compare-col.desktop .compare-col-title { color: #c97b63; }
+  .compare-col.vscode .compare-col-title { color: #5c8fd6; }
+  .compare-row { display: flex; flex-direction: column; gap: 3px; }
+  .compare-row-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #666; }
+  .compare-col.terminal .compare-row-label { color: #555; }
+  .compare-row-value { font-size: 13px; font-weight: 300; line-height: 1.5; }
+  .compare-col.terminal .compare-row-value { color: #e0e0e0; }
+  .compare-col.desktop .compare-row-value { color: #333; }
+  .compare-col.vscode .compare-row-value { color: #444; }
+  .compare-badge { font-size: 11px; font-weight: 700; background: #c97b63; color: white; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-top: 4px; }
+  .compare-footer { font-size: 13px; font-weight: 300; color: #aaa; text-align: center; font-style: italic; }
+
+  .slide-a { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-a img { max-height: 75vh; max-width: 48%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sa-text { display: flex; flex-direction: column; gap: 20px; max-width: 380px; }
+  .sa-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; line-height: 1.3; }
+  .sa-modes { display: flex; flex-direction: column; gap: 10px; }
+  .sa-mode { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-radius: 10px; background: #f7f4f1; }
+  .sa-mode.active { background: #fdf0eb; border: 1.5px solid #c97b63; }
+  .sa-mode-name { font-size: 14px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; min-width: 56px; }
+  .sa-mode.active .sa-mode-name { color: #c97b63; }
+  .sa-mode-desc { font-size: 13px; font-weight: 300; color: #888; line-height: 1.5; }
+  .sa-note { font-size: 12px; color: #c97b63; background: #fdf0eb; border-radius: 8px; padding: 10px 14px; line-height: 1.6; }
+
+  .slide-b { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-b img { max-height: 75vh; max-width: 40%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sb-text { display: flex; flex-direction: column; gap: 18px; max-width: 400px; }
+  .sb-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; }
+  .sb-items { display: flex; flex-direction: column; gap: 8px; }
+  .sb-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 10px; background: #f7f4f1; }
+  .sb-item-name { font-size: 13px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; min-width: 100px; }
+  .sb-item-desc { font-size: 12px; font-weight: 300; color: #888; line-height: 1.5; }
+  .sb-note { font-size: 12px; color: #c97b63; background: #fdf0eb; border-radius: 8px; padding: 10px 14px; line-height: 1.6; }
+
+  .slide-c { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-c img { max-height: 65vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sc-text { display: flex; flex-direction: column; gap: 18px; max-width: 400px; }
+  .sc-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; }
+  .sc-models { display: flex; flex-direction: column; gap: 8px; }
+  .sc-model { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 10px; background: #f7f4f1; }
+  .sc-model.recommended { background: #fdf0eb; border: 1.5px solid #c97b63; }
+  .sc-model-name { font-size: 13px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; min-width: 110px; }
+  .sc-model.recommended .sc-model-name { color: #c97b63; }
+  .sc-model-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.5; }
+  .sc-footer { font-size: 12px; color: #aaa; font-style: italic; }
+  .sc-date { font-size: 11px; color: #bbb; }
+
+  .slide-d { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-d img { max-height: 75vh; max-width: 48%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sd-text { display: flex; flex-direction: column; gap: 20px; max-width: 380px; }
+  .sd-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; line-height: 1.3; }
+  .sd-body { font-size: clamp(13px, 1.4vw, 17px); font-weight: 300; color: #555; line-height: 1.8; }
+  .sd-warning { background: #fff8f6; border-right: 3px solid #c97b63; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #555; line-height: 1.7; }
+  .sd-warning strong { color: #c97b63; font-weight: 700; }
+  .sd-tip { font-size: 12px; color: #888; font-style: italic; line-height: 1.6; }
+
+  .slide-e { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-e img { max-height: 65vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .se-text { display: flex; flex-direction: column; gap: 18px; max-width: 400px; }
+  .se-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; }
+  .se-permissions { display: flex; flex-direction: column; gap: 8px; }
+  .se-perm { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 10px; background: #f7f4f1; }
+  .se-perm.recommended { background: #fdf0eb; border: 1.5px solid #c97b63; }
+  .se-perm.danger { opacity: 0.45; }
+  .se-perm-name { font-size: 13px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; min-width: 136px; }
+  .se-perm.recommended .se-perm-name { color: #c97b63; }
+  .se-perm-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.5; }
+  .se-note { font-size: 12px; color: #555; background: #fdf0eb; border-radius: 8px; padding: 10px 14px; line-height: 1.7; }
+
+  .slide-f { flex-direction: row; align-items: center; justify-content: center; gap: 60px; padding: 48px 80px 100px; }
+  .slide-f img { max-height: 65vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0; object-fit: contain; }
+  .sf-text { display: flex; flex-direction: column; gap: 18px; max-width: 400px; }
+  .sf-title { font-size: clamp(22px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; }
+  .sf-items { display: flex; flex-direction: column; gap: 8px; }
+  .sf-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 16px; border-radius: 10px; background: #f7f4f1; }
+  .sf-item.highlight { background: #fdf0eb; }
+  .sf-item-icon { font-size: 20px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .sf-item-body { display: flex; flex-direction: column; gap: 3px; }
+  .sf-item-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+  .sf-item-desc { font-size: 12px; font-weight: 300; color: #666; line-height: 1.5; }
+  .sf-note { font-size: 12px; color: #aaa; font-style: italic; }
+
   /* ── MOBILE ── */
   @media (max-width: 680px) {
     .slide { padding: 24px 20px 80px; overflow-y: auto; align-items: flex-start; justify-content: flex-start; flex-direction: column !important; gap: 20px !important; }
@@ -1099,6 +1193,60 @@
     <div class="safety-footer">סקרנות, בהחלט.<br><span>הרפתקנות עם הרשאות — קצת פחות.</span></div>
   </div>
 
+  <!-- SLIDE COMPARE — שלוש דרכים לעבוד עם קלוד קוד -->
+  <div class="slide slide-compare">
+    <div class="compare-title">שלוש דרכים. מתחילות מהקלה.</div>
+    <div class="compare-sub">Three ways. Starting with the easy one.</div>
+    <div class="compare-table">
+      <div class="compare-col terminal">
+        <div class="compare-col-title">⌨️ טרמינל</div>
+        <div class="compare-row">
+          <div class="compare-row-label">מה זה</div>
+          <div class="compare-row-value">שורות שחורות ופקודות. מדויק ומהיר.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">מתאים ל</div>
+          <div class="compare-row-value">מי שמרגישה בבית עם קוד</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">מתי נלמד?</div>
+          <div class="compare-row-value">בקרוב</div>
+        </div>
+      </div>
+      <div class="compare-col desktop">
+        <div class="compare-col-title">🖥️ דסקטופ ⭐</div>
+        <div class="compare-row">
+          <div class="compare-row-label">מה זה</div>
+          <div class="compare-row-value">אפליקציה עם כפתורים. רואות הכל לפני שקורה.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">מתאים ל</div>
+          <div class="compare-row-value">מתחילות. כולנו.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">בשיעור הזה</div>
+          <div class="compare-row-value"><span class="compare-badge">כן — זה מה שנלמד</span></div>
+        </div>
+      </div>
+      <div class="compare-col vscode">
+        <div class="compare-col-title">💻 VS Code</div>
+        <div class="compare-row">
+          <div class="compare-row-label">מה זה</div>
+          <div class="compare-row-value">עורך קוד מקצועי עם קלוד קוד משולב בפנים</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">מתאים ל</div>
+          <div class="compare-row-value">אחרי שמתרגלות</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label">מתי נלמד?</div>
+          <div class="compare-row-value">בקרוב</div>
+        </div>
+      </div>
+    </div>
+    <div class="compare-footer">הכלי אותו כלי. הממשק — שאלה של זמן ורמה. יגיע לכל השאר.</div>
+  </div>
+
   <!-- SLIDE INSTALL INTRO — מתקינות את קלוד קוד -->
   <div class="slide slide-install-intro">
     <div class="install-intro-text">
@@ -1106,7 +1254,7 @@
       <div class="install-intro-sub">הגיע הרגע.<br>אתן מתרגשות? כי אני כן.</div>
       <div class="install-intro-terminal">
         <p>הפעם — אין טרמינל.</p>
-        <p class="terminal-joke">מורידות אפליקציה. כמו וואייז. רק שזה בונה לכן דברים.</p>
+        <p class="terminal-joke">מורידות אפליקציה. כמו ווייז. רק שזה בונה לכן דברים.</p>
         <p>ממשק גרפי, כפתורים, וקלוד שמחכה שתאשרו<br>כל שינוי לפני שהוא נוגע בכלום.<br>שלכן. לגמרי.</p>
       </div>
     </div>
@@ -1208,8 +1356,8 @@
   <div class="slide slide-7">
 
     <div class="s7-header">
-      <div class="s7-title">הורדות. שתי לחיצות. את בפנים. יאללה.</div>
-      <div class="s7-note">לוחצות על הלינק, מורידות, גמרנו. בלי טרמינל. בלי קסמים.</div>
+      <div class="s7-title">הורדות. שתי לחיצות. את בפנים.</div>
+      <img src="תמונות/הורדה.png" alt="Download Page" class="s7-screenshot">
     </div>
 
     <div class="s7-cols">
@@ -1246,18 +1394,11 @@
   <!-- SLIDE 9 — ההתקנה -->
   <div class="slide slide-9">
     <div class="s9-content">
-      <div class="s9-title">ארבעה צעדים.<br>שבעים אחוז מהם לחיצה על כפתור.</div>
+      <div class="s9-title">שני צעדים.<br>שניהם לחיצה על כפתור.</div>
 
       <div class="s8-steps" style="max-width: 480px;">
         <div class="s8-step">
           <div class="s8-step-num">①</div>
-          <div class="s8-step-content">
-            <div class="s8-step-title">מורידות את האפליקציה</div>
-            <div class="s8-step-desc">claude.com/download — בוחרות Mac או Windows</div>
-          </div>
-        </div>
-        <div class="s8-step">
-          <div class="s8-step-num">②</div>
           <div class="s8-step-content">
             <div class="s8-step-title">פותחות אותה</div>
             <div class="s8-step-desc">Mac: Applications / Windows: Start Menu</div>
@@ -1270,52 +1411,172 @@
             <div class="s8-step-desc">אותו חשבון שנרשמתן אליו קודם</div>
           </div>
         </div>
-        <div class="s8-step">
-          <div class="s8-step-num">④</div>
-          <div class="s8-step-content">
-            <div class="s8-step-title">לוחצות על <strong>Code</strong> למעלה באמצע</div>
-            <div class="s8-step-desc">אם מבקש לשדרג — צריך מנוי. אם מבקש להיכנס שוב — נכנסות ומריצות מחדש.</div>
-          </div>
-        </div>
       </div>
 
       <div class="s9-annotation">אתן בפנים. כמעט בלי להזיע.</div>
-      <div style="display:inline-flex; align-items:center; gap:10px; background:#fdf0eb; border:1.5px solid #e8c4b8; border-radius:10px; padding:10px 16px; margin-top:4px; font-size:14px; color:#1a1a1a; direction:rtl;">
-        ☝️ אחרי ההתחברות — לוחצות ישר על <strong style="color:#c97b63;">Code</strong> ← לא על Chat, לא על Cowork. Code.
-      </div>
       <div class="s9-troubleshoot">🛠️ נתקעתן? קורה לכולן. צלמו מסך ושאלו את קלוד — הוא יודע לפתור את זה. <a href="https://claude.ai" target="_blank">claude.ai</a></div>
     </div>
     <img src="תמונות/installer_creature.png" alt="Installer Creature">
   </div>
 
-  <!-- SLIDE 10 — הרגע הראשון -->
-  <div class="slide slide-10" style="flex-direction: row; gap: 60px; padding: 48px 80px; align-items: center;">
-    <img src="תמונות/desktop_app_light.png" alt="Desktop App" style="max-height: 70vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); flex-shrink: 0;">
-    <div style="display: flex; flex-direction: column; gap: 20px; max-width: 480px;">
-    <div class="s10-title" style="text-align: right;">קלוד לא עושה כלום בלי לשאול קודם.</div>
-    <div class="s10-subtitle" style="text-align: right;">ככה נראה הרגע הראשון שלכן:</div>
-    <div class="s10-app-flow">
-      <div class="s10-flow-step">
-        <div class="s10-flow-num">1</div>
-        <div class="s10-flow-text">בוחרות <strong>Local</strong> — קלוד עובד על הקבצים שלכן ישירות</div>
+  <!-- SLIDE A — לוחצות על Code -->
+  <div class="slide slide-a">
+    <img src="תמונות/a.png" alt="Claude Code Desktop">
+    <div class="sa-text">
+      <div class="sa-title">פתחתן את האפליקציה. מעולה. עכשיו — כאן.</div>
+      <div class="sa-modes">
+        <div class="sa-mode">
+          <div class="sa-mode-name">Chat</div>
+          <div class="sa-mode-desc">שיחה רגילה עם קלוד. מה שכבר מכירות. לא זה.</div>
+        </div>
+        <div class="sa-mode active">
+          <div class="sa-mode-name">Code</div>
+          <div class="sa-mode-desc">המקום שלנו. לוחצות כאן.</div>
+        </div>
+        <div class="sa-mode">
+          <div class="sa-mode-name">Cowork</div>
+          <div class="sa-mode-desc">שיתוף פעולה בזמן אמת. בהמשך.</div>
+        </div>
       </div>
-      <div class="s10-flow-step">
-        <div class="s10-flow-num">2</div>
-        <div class="s10-flow-text">לוחצות <strong>Select folder</strong> — בוחרות תיקייה לעבוד בה. הוא לא יוצא ממנה.</div>
-      </div>
-      <div class="s10-flow-step">
-        <div class="s10-flow-num">3</div>
-        <div class="s10-flow-text">בוחרות <strong>מודל</strong> — Sonnet לרוב הדברים. Opus לפרויקטים רציניים. Haiku כשממהרות.</div>
-      </div>
-      <div class="s10-flow-step">
-        <div class="s10-flow-num">4</div>
-        <div class="s10-flow-text">כותבות <strong>מה תרצו</strong> — קלוד מציג בדיוק מה הוא הולך לשנות ומחכה לאישור שלכן.</div>
-      </div>
-    </div>
-    <div class="s10-permission-note">כמו קבלן שמראה דוגמת צבע לפני שפותח את הפח. שלכן. לגמרי.</div>
+      <div class="sa-note">אם כלום לא קורה — ייתכן שצריך לשדרג מנוי. חזרו לסלייד של התוכניות.</div>
     </div>
   </div>
 
+  <!-- SLIDE B — תפריט הצד -->
+  <div class="slide slide-b">
+    <img src="תמונות/b.png" alt="Sidebar">
+    <div class="sb-text">
+      <div class="sb-title">הבית של הסשנים שלכן</div>
+      <div class="sb-items">
+        <div class="sb-item">
+          <div class="sb-item-name">New session</div>
+          <div class="sb-item-desc">שיחה חדשה עם קלוד. מכאן מתחילות כל פעם.</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-item-name">Scheduled</div>
+          <div class="sb-item-desc">משימות מתוזמנות. מתקדם — לא נוגעות עכשיו.</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-item-name">Dispatch</div>
+          <div class="sb-item-desc">הרצת משימות מרובות במקביל. גם מתקדם. גם לא עכשיו.</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-item-name">Customize</div>
+          <div class="sb-item-desc">הגדרות אישיות לקלוד. בקרוב.</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-item-name">All projects</div>
+          <div class="sb-item-desc">כל הפרויקטים שיצרתן. הארכיון שלכן.</div>
+        </div>
+      </div>
+      <div class="sb-note">אם קלוד מבקש אימות בשלב הזה — תאמתו. זה נורמלי לגמרי.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE C — בחירת מודל -->
+  <div class="slide slide-c">
+    <img src="תמונות/c.png" alt="Model Selection">
+    <div class="sc-text">
+      <div class="sc-title">איזה מוח בוחרות?</div>
+      <div class="sc-models">
+        <div class="sc-model">
+          <div class="sc-model-name">Opus 4.6</div>
+          <div class="sc-model-desc">הכי חכם, הכי עמוק. לפרויקטים מורכבים שדורשים חשיבה.</div>
+        </div>
+        <div class="sc-model">
+          <div class="sc-model-name">Opus 4.6 1M</div>
+          <div class="sc-model-desc">כמו Opus — רק עם זיכרון של מיליון טוקן. לפרויקטים עם הרבה קבצים.</div>
+        </div>
+        <div class="sc-model recommended">
+          <div class="sc-model-name">Sonnet 4.6 ✓</div>
+          <div class="sc-model-desc">מאוזן. חכם. מהיר. מתאים ל-90% מהמשימות. ברירת המחדל שלנו.</div>
+        </div>
+        <div class="sc-model">
+          <div class="sc-model-name">Haiku 4.5</div>
+          <div class="sc-model-desc">הכי מהיר, הכי קל. לשאלות מהירות ובדיקות קטנות.</div>
+        </div>
+      </div>
+      <div class="sc-footer">מתחילות עם Sonnet. עד שתרגישו שצריך משהו אחר — לא צריך.</div>
+      <div class="sc-date">מעודכן: מרץ 2026</div>
+    </div>
+  </div>
+
+  <!-- SLIDE D — התיקייה -->
+  <div class="slide slide-d">
+    <img src="תמונות/d.png" alt="Folder Selection">
+    <div class="sd-text">
+      <div class="sd-title">הבית שקלוד עובד בתוכו</div>
+      <div class="sd-body">קלוד רואה רק את מה שבתיקייה שבחרתן.<br>הוא לא יוצא ממנה. לא מחפש. לא מציץ לצדדים.<br><br>זה אומר שכל מה שבתוכה — הוא רואה.</div>
+      <div class="sd-warning"><strong>מה חשוב שלא יהיה שם:</strong><br>סיסמאות וקבצי .env · מידע אישי רגיש · גיבויי דיסק ותיקיות מערכת</div>
+      <div class="sd-tip">💡 המלצה: תיקיית תרגול נקייה לפני שנוגעות בפרויקטים אמיתיים. מקום שאפשר לטעות בו בלי להזיע.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE E — הרשאות -->
+  <div class="slide slide-e">
+    <img src="תמונות/e.png" alt="Permissions">
+    <div class="se-text">
+      <div class="se-title">מי מחליטה פה?</div>
+      <div class="se-permissions">
+        <div class="se-perm recommended">
+          <div class="se-perm-name">Ask permissions ✓</div>
+          <div class="se-perm-desc">קלוד שואל לפני כל פעולה. מומלץ למתחילות. את המנהלת.</div>
+        </div>
+        <div class="se-perm">
+          <div class="se-perm-name">Auto accept edits</div>
+          <div class="se-perm-desc">מבצע שינויים ישירות בלי לשאול. יעיל, דורש ניסיון.</div>
+        </div>
+        <div class="se-perm">
+          <div class="se-perm-name">Plan mode</div>
+          <div class="se-perm-desc">מציג תכנית לפני שמתחיל. טוב לפרויקטים גדולים.</div>
+        </div>
+        <div class="se-perm danger">
+          <div class="se-perm-name">Bypass permissions</div>
+          <div class="se-perm-desc">בלי אישורים בכלל. לא נוגעות בזה. לא עכשיו.</div>
+        </div>
+      </div>
+      <div class="se-note">מתחילות עם Ask Permissions. תמיד.<br>לא בגלל שהוא לא מהימן — בגלל שאת צריכה לדעת מה קורה.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE F — תפריט הפלוס -->
+  <div class="slide slide-f">
+    <img src="תמונות/f.png" alt="Plus Menu">
+    <div class="sf-text">
+      <div class="sf-title">מה מסתתר אחרי ה־+</div>
+      <div class="sf-items">
+        <div class="sf-item highlight">
+          <div class="sf-item-icon">📎</div>
+          <div class="sf-item-body">
+            <div class="sf-item-name">Add files or photos</div>
+            <div class="sf-item-desc">מצרפות קובץ, תמונה או מסמך ישירות לשיחה. קלוד יראה ויתייחס.</div>
+          </div>
+        </div>
+        <div class="sf-item">
+          <div class="sf-item-icon">/</div>
+          <div class="sf-item-body">
+            <div class="sf-item-name">Slash commands</div>
+            <div class="sf-item-desc">פקודות מהירות כמו /help ו-/clear. מקצרות את החיים.</div>
+          </div>
+        </div>
+        <div class="sf-item">
+          <div class="sf-item-icon">🔗</div>
+          <div class="sf-item-body">
+            <div class="sf-item-name">Connectors</div>
+            <div class="sf-item-desc">חיבור לכלים חיצוניים — Notion, GitHub, Google Drive. מתקדם.</div>
+          </div>
+        </div>
+        <div class="sf-item">
+          <div class="sf-item-icon">🔌</div>
+          <div class="sf-item-body">
+            <div class="sf-item-name">Add plugins</div>
+            <div class="sf-item-desc">הרחבות שמוסיפות יכולות לקלוד. עוד יגיע.</div>
+          </div>
+        </div>
+      </div>
+      <div class="sf-note">Add files or photos — הכי שימושי מיד. השאר? נפגש בשיעורים הבאים.</div>
+    </div>
+  </div>
 
   <!-- SLIDE 13 — Tips -->
   <div class="slide slide-13">
@@ -1325,7 +1586,7 @@
       <div class="s13-tip">
         <img src="תמונות/tip_hebrew.png" alt="" class="s13-tip-img">
         <div class="s13-tip-title"><span>01</span> עברית — כן, ממש</div>
-        <div class="s13-tip-body">אין צורך לכתוב באנגלית כדי להישמע רצינית. "please update my website" לא עוזר. זה רק מוזר.</div>
+        <div class="s13-tip-body">אין צורך לכתוב באנגלית כדי להישמע רצינית. "please update my website" לא עוזר — פשוט לא חייב.</div>
       </div>
 
       <div class="s13-tip">
@@ -1362,43 +1623,6 @@
   </div>
 
 </div>
-
-  <!-- SLIDE 14 — Desktop App features -->
-  <div class="slide slide-14" style="flex-direction: row; gap: 60px; padding: 48px 80px; align-items: center;">
-
-    <div style="display: flex; flex-direction: column; gap: 20px; max-width: 480px;">
-    <div class="s14-supertitle">למה אנחנו עובדות עם האפליקציה</div>
-    <div class="s14-title">כי פה קלוד שואל לפני שהוא עושה.</div>
-
-    <div class="s14-desktop-cols">
-      <div class="s14-feature">
-        <div class="s14-feature-icon">👁️</div>
-        <div class="s14-feature-body">
-          <div class="s14-feature-title">רואות הכל לפני אישור</div>
-          <div class="s14-feature-desc">כל שינוי מוצג כ-diff — שורה ירוקה (נוסף) ואדומה (הוסר). מאשרות? קורה. לא? לא קורה.</div>
-          <div class="s14-feature-desc" style="margin-top:6px; font-size:11px; color:#bbb;">* diff = השוואה בין הגרסה הישנה לחדשה. ירוק = נוסף. אדום = נמחק. זהו.</div>
-        </div>
-      </div>
-      <div class="s14-feature">
-        <div class="s14-feature-icon">🖥️</div>
-        <div class="s14-feature-body">
-          <div class="s14-feature-title">ממשק גרפי. בלי שורות שחורות.</div>
-          <div class="s14-feature-desc">כפתורים, תפריטים, preview חי לאפליקציות שבונות. לא צריך לדעת להקליד פקודות.</div>
-        </div>
-      </div>
-      <div class="s14-feature">
-        <div class="s14-feature-icon">🛑</div>
-        <div class="s14-feature-body">
-          <div class="s14-feature-title">Ask permissions — ברירת המחדל</div>
-          <div class="s14-feature-desc">קלוד שואל לפני כל פעולה. אתן מחליטות. לא הוא.</div>
-        </div>
-      </div>
-    </div>
-    </div>
-    <img src="תמונות/desktop_app_dark.png" alt="Desktop App Dark" style="max-height: 70vh; max-width: 42%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); flex-shrink: 0;">
-
-  </div>
-
 
   <!-- SLIDE MISSION — המשימה הראשונה -->
   <div class="slide slide-mission">
