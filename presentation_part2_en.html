@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code — Part 2: Where We Work</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f2ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide img { mix-blend-mode: multiply; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 60px 100px;
+    background: #ffffff;
+  }
+  .slide.active { display: flex; }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 100;
+  }
+  .nav button {
+    background: none;
+    border: 1.5px solid #d0ccc8;
+    color: #888;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 8px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav button:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .nav .counter { font-size: 12px; color: #bbb; min-width: 40px; text-align: center; }
+
+  /* ── SLIDE 1 — TITLE ── */
+  .slide-1 {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px 100px;
+    gap: 60px;
+  }
+  .s1-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 520px;
+    flex-shrink: 0;
+  }
+  .s1-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #c97b63;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .s1-title {
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .s1-body {
+    font-size: clamp(13px, 1.3vw, 17px);
+    font-weight: 300;
+    color: #555;
+    line-height: 1.9;
+  }
+  .s1-body em {
+    font-style: normal;
+    color: #c97b63;
+    font-weight: 400;
+  }
+  .s1-closing {
+    margin-top: 20px;
+    font-size: clamp(12px, 1.2vw, 15px);
+    font-weight: 400;
+    color: #999;
+    line-height: 1.9;
+  }
+  .s1-creature {
+    flex-shrink: 0;
+    height: clamp(280px, 38vh, 480px);
+    width: auto;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 12px 32px rgba(0,0,0,0.08));
+  }
+
+  /* ── SLIDE 2 — TERMINAL ── */
+  .slide-2 {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 48px 60px 100px;
+  }
+  .slide-2 .s2-creature {
+    height: 260px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.07));
+    flex-shrink: 0;
+    mix-blend-mode: multiply;
+  }
+  /* Terminal window mock */
+  .terminal-mock {
+    flex-shrink: 0;
+    width: 280px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    overflow: hidden;
+    font-family: 'SF Mono', 'Menlo', monospace;
+  }
+  .terminal-titlebar {
+    background: #323232;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28c840; }
+  .terminal-title-text { font-size: 11px; color: #888; margin: 0 auto; font-family: -apple-system, sans-serif; }
+  .terminal-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+  .terminal-line { font-size: 12px; color: #e0e0e0; line-height: 1.8; direction: ltr; text-align: left; }
+  .terminal-prompt { color: #28c840; }
+  .terminal-dim { color: #555; font-size: 11px; }
+  .terminal-cursor { display: inline-block; width: 7px; height: 13px; background: #e0e0e0; margin-left: 2px; animation: blink 1s step-end infinite; vertical-align: middle; }
+  .s2-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 520px;
+  }
+  .s2-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #c97b63;
+    text-transform: uppercase;
+  }
+  .s2-title {
+    font-size: clamp(24px, 2.8vw, 38px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.25;
+  }
+  .s2-body {
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: 300;
+    color: #555;
+    line-height: 1.9;
+  }
+  .s2-body em { font-style: italic; color: #aaa; }
+  .s2-closing {
+    font-size: clamp(13px, 1.3vw, 16px);
+    font-weight: 400;
+    color: #c97b63;
+    background: #fdf0eb;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border-left: 3px solid #c97b63;
+    line-height: 1.7;
+  }
+
+  /* ── SLIDES INSTALL + LAUNCH ── */
+  .slide-install, .slide-launch {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 60px 80px 100px;
+  }
+  .sil-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #c97b63;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .sil-title {
+    font-size: clamp(28px, 3.2vw, 46px);
+    font-weight: 900;
+    color: #1a1a1a;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .sil-body {
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: 300;
+    color: #555;
+    line-height: 1.9;
+    text-align: center;
+    max-width: 600px;
+  }
+  .sil-cmd-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 18px 28px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.22);
+    direction: ltr;
+  }
+  .sil-prompt { color: #28c840; font-family: 'Menlo', monospace; font-size: 15px; }
+  .sil-cmd { color: #e0e0e0; font-family: 'Menlo', monospace; font-size: 15px; }
+  .s2-optional-note {
+    font-size: 13px;
+    font-weight: 400;
+    color: #aaa;
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+  .sil-copy-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #f5f2ee;
+    border: 1.5px dashed #c97b63;
+    border-radius: 10px;
+    padding: 12px 22px;
+    direction: ltr;
+  }
+  .sil-copy-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #c97b63;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+  }
+  .sil-copy-cmd {
+    font-family: 'Menlo', monospace;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: none;
+    user-select: all;
+  }
+  .sil-copy-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    background: #c97b63;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .sil-copy-btn:hover { background: #b56a54; }
+  .sil-copy-btn.copied { background: #4caf50; }
+  .sil-arrow-note {
+    font-size: 12px;
+    color: #bbb;
+    font-weight: 300;
+    text-align: center;
+  }
+  .sil-closing {
+    font-size: clamp(13px, 1.3vw, 16px);
+    font-weight: 400;
+    color: #c97b63;
+    background: #fdf0eb;
+    padding: 12px 22px;
+    border-radius: 10px;
+    border-left: 3px solid #c97b63;
+    text-align: center;
+  }
+
+  /* ── SLIDE OPEN-TERMINAL ── */
+  .slide-open-terminal {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    padding: 60px 80px 100px;
+  }
+  .sot-title {
+    font-size: clamp(26px, 3vw, 42px);
+    font-weight: 900;
+    color: #1a1a1a;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .sot-cols {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .sot-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  .sot-os { font-size: 22px; font-weight: 900; color: #1a1a1a; text-align: center; }
+  .sot-instruction { font-size: 13px; color: #888; font-weight: 300; text-align: center; line-height: 1.7; }
+  .sot-divider { width: 1px; background: #e8e4df; align-self: stretch; margin: 0; }
+  .spotlight-mock {
+    width: 280px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+  .spotlight-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .spotlight-icon { font-size: 18px; color: #999; }
+  .spotlight-text { font-size: 18px; color: #1a1a1a; font-family: -apple-system, sans-serif; font-weight: 400; flex: 1; direction: ltr; }
+  .spotlight-cursor { display: inline-block; width: 2px; height: 18px; background: #007aff; margin-left: 1px; animation: blink 1s step-end infinite; vertical-align: middle; }
+  .spotlight-result {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #007aff;
+    color: white;
+  }
+  .spotlight-result-icon { font-size: 24px; }
+  .spotlight-result-text { font-size: 14px; font-family: -apple-system, sans-serif; }
+  .spotlight-result-text strong { display: block; font-weight: 600; }
+  .spotlight-result-text span { font-size: 11px; opacity: 0.8; }
+  .win-search-mock {
+    width: 280px;
+    background: #202020;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    overflow: hidden;
+  }
+  .win-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #2d2d2d;
+    border-bottom: 1px solid #383838;
+  }
+  .win-search-icon { font-size: 16px; }
+  .win-search-text { font-size: 14px; color: #e0e0e0; font-family: -apple-system, sans-serif; direction: ltr; flex: 1; }
+  .win-search-result {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0078d4;
+    color: white;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+  }
+  .sot-closing {
+    font-size: clamp(13px, 1.3vw, 16px);
+    color: #c97b63;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  /* ── SLIDE 3 — VS CODE ── */
+  .slide-3 {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 48px 80px 100px;
+  }
+  .s3-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+  .s3-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #c97b63;
+    text-transform: uppercase;
+  }
+  .s3-title {
+    font-size: clamp(26px, 3vw, 42px);
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.2;
+  }
+  .s3-content {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 920px;
+  }
+  .s3-body { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .s3-para {
+    font-size: clamp(13px, 1.4vw, 17px);
+    font-weight: 300;
+    color: #555;
+    line-height: 1.9;
+  }
+  .s3-para em { font-style: italic; color: #aaa; }
+  .s3-closing {
+    font-size: clamp(13px, 1.3vw, 16px);
+    font-weight: 400;
+    color: #c97b63;
+    background: #fdf0eb;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border-left: 3px solid #c97b63;
+    line-height: 1.7;
+    margin-top: 4px;
+  }
+  .s3-screenshot {
+    flex-shrink: 0;
+    width: 320px;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    mix-blend-mode: normal;
+  }
+
+  /* ── SLIDE 4 — COMPARISON ── */
+  .slide-4 {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 48px 80px 100px;
+  }
+  .s4-title {
+    font-size: clamp(28px, 3.2vw, 44px);
+    font-weight: 900;
+    color: #1a1a1a;
+    text-align: center;
+  }
+  .s4-sub {
+    font-size: clamp(14px, 1.4vw, 17px);
+    font-weight: 300;
+    color: #999;
+    text-align: center;
+    font-style: italic;
+    margin-top: -12px;
+  }
+  .s4-cards {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    width: 100%;
+    max-width: 900px;
+  }
+  .s4-card {
+    flex: 1;
+    background: #f7f4f1;
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    border: 1.5px solid transparent;
+  }
+  .s4-card.recommended {
+    border-color: #c97b63;
+    box-shadow: 0 8px 32px rgba(201,123,99,0.12);
+  }
+  .s4-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #c97b63;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .s4-card-icon { font-size: 32px; }
+  .s4-card-title { font-size: 18px; font-weight: 900; color: #1a1a1a; }
+  .s4-card-body {
+    font-size: clamp(12px, 1.2vw, 14px);
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+    flex: 1;
+  }
+  .s4-card-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c97b63;
+    background: #fdf0eb;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    align-self: flex-start;
+  }
+  .s4-card.dimmed { opacity: 0.55; }
+  .s4-closing {
+    font-size: clamp(13px, 1.3vw, 16px);
+    font-weight: 300;
+    color: #aaa;
+    text-align: center;
+    font-style: italic;
+    max-width: 620px;
+    line-height: 1.7;
+  }
+  .s4-creature {
+    position: absolute;
+    right: 32px;
+    bottom: 70px;
+    height: 160px;
+    width: auto;
+    opacity: 0.7;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+  }
+
+  /* ── SLIDE WARNING ── */
+  .slide-warning {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 72px;
+    padding: 60px 100px 100px;
+  }
+
+  /* ── SLIDE 14 ── */
+  .slide-14 { flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 48px 80px; }
+  .s14-supertitle { font-size: 13px; font-weight: 700; color: #c97b63; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
+  .s14-title { font-size: clamp(24px, 2.8vw, 38px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .s14-cols { display: flex; gap: 40px; align-items: flex-start; width: 100%; }
+  .s14-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; background: #f7f4f1; border-radius: 16px; padding: 28px 24px; }
+  .s14-col-title { font-size: 17px; font-weight: 700; color: #1a1a1a; text-align: center; }
+  .s14-col-def { font-size: 12px; color: #999; font-style: italic; text-align: center; line-height: 1.5; }
+  .s14-col img { height: 110px; mix-blend-mode: multiply; }
+  .s14-col-body { font-size: 13px; font-weight: 300; color: #555; line-height: 1.7; text-align: center; }
+  .s14-col-tag { font-size: 11px; font-weight: 700; color: #c97b63; background: #fdf0eb; padding: 4px 12px; border-radius: 20px; }
+  .s14-closing { font-size: 14px; font-weight: 300; color: #aaa; text-align: center; font-style: italic; }
+
+  /* ── SLIDE VSCODE-DL ── */
+  .slide-vscode-dl { flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 40px 60px 100px; }
+  .vscode-dl-title { font-size: clamp(32px, 4vw, 56px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .vscode-dl-sub { font-size: clamp(16px, 1.8vw, 22px); font-weight: 300; color: #666; text-align: center; }
+  .vscode-dl-steps { font-size: clamp(18px, 2vw, 26px); font-weight: 700; color: #1a1a1a; text-align: center; }
+  .vscode-dl-link { font-size: clamp(14px, 1.5vw, 18px); color: #c97b63; text-decoration: none; border-bottom: 1px solid #c97b63; padding-bottom: 2px; }
+  .vscode-dl-link:hover { opacity: 0.75; }
+
+  /* ── SLIDE VSCODE-INTRO ── */
+  .slide-vscode-intro { flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 32px 60px 90px; }
+  .vscode-intro-title { font-size: clamp(24px, 3vw, 40px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .vscode-intro-sub { font-size: clamp(14px, 1.6vw, 20px); font-weight: 300; color: #555; text-align: center; }
+  .vscode-intro-img-wrap { position: relative; display: inline-block; }
+  .vscode-intro-img-wrap img { max-height: 42vh; max-width: 85vw; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); display: block; }
+  .vscode-intro-body { font-size: clamp(12px, 1.3vw, 16px); font-weight: 300; color: #777; text-align: center; line-height: 1.7; max-width: 680px; }
+
+  /* ── SLIDES EXTENSIONS ── */
+  .slide-ext { flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px 60px 90px; }
+  .ext-title { font-size: clamp(20px, 2.4vw, 34px); font-weight: 900; color: #1a1a1a; text-align: center; }
+  .ext-sub { font-size: clamp(13px, 1.4vw, 18px); font-weight: 300; color: #c97b63; text-align: center; }
+  .ext-img { max-height: 40vh; max-width: 84vw; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+  .ext-step-text { font-size: clamp(14px, 1.6vw, 22px); font-weight: 400; color: #333; text-align: center; }
+  .ext-step-text em { font-style: normal; font-family: monospace; background: #f3ede8; padding: 2px 8px; border-radius: 4px; }
+  .ext-note { font-size: clamp(12px, 1.2vw, 15px); font-weight: 300; color: #aaa; text-align: center; font-style: italic; }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- SLIDE 1 — INTRO -->
+  <div class="slide slide-1 active">
+    <div class="s1-text">
+      <div class="s1-eyebrow">Part 2 · Your Working Environment</div>
+      <div class="s1-title">Before we<br>carry on.</div>
+      <div class="s1-body">
+        Before we sprint ahead, let's take a moment to get our bearings.<br>
+        There are several places you can work with Claude Code,
+        and if right now you're thinking <em>"sorry — why are there multiple of these?"</em> — that's entirely reasonable.<br><br>
+        Some options look friendly and approachable.<br>
+        Others look like something you'd accidentally open and immediately close in case you launched something governmental.<br>
+        In practice? <em>It's all considerably less dramatic than it appears.</em>
+      </div>
+      <div class="s1-closing">
+        So let's work out what's what,<br>
+        what makes sense to start with,<br>
+        and what you can safely leave for later —
+        when you feel slightly less like every click is a legally binding decision.
+      </div>
+    </div>
+    <img src="תמונות/part2_slide1_crossroads.png" class="s1-creature" alt="">
+  </div>
+
+  <!-- SLIDE 2 — THE TERMINAL -->
+  <div class="slide slide-2">
+    <div class="s2-text">
+      <div class="s2-eyebrow">Tool #1 — The one worth knowing</div>
+      <div class="s2-title">The Terminal:<br>a black screen that somehow got a terrifying reputation.</div>
+      <div class="s2-body">
+        The Terminal is simply a window where you type instructions to your computer.
+        That's genuinely the whole story.<br>
+        No buttons, no menus, no reassuring icon saying "click here, everything will be fine".<br><br>
+        Yes, it looks like something from a hacking film.
+        Black screen, cryptic text, the vague sense that someone's about to say "we've got thirty seconds before the firewall kicks in".<br>
+        In reality, it's <em>far less cinematic than that</em>.
+        It's simply a place where you tell the computer what to do, directly.<br><br>
+        Claude Code works beautifully there — it's essentially its natural habitat.
+      </div>
+      <div class="s2-closing">
+        You don't have to love it.<br>
+        Just understand it's less "dangerous hacker" and more "window without a GUI."
+      </div>
+    </div>
+    <img src="תמונות/part2_slide2_hacker.png" class="s2-creature" alt="The Terminal">
+    <div class="terminal-mock">
+      <div class="terminal-titlebar">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <div class="terminal-title-text">bash</div>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="terminal-prompt">~$</span> claude</div>
+        <div class="terminal-line" style="color:#a8ff78;">✓ Claude Code ready</div>
+        <div class="terminal-dim">─────────────────────</div>
+        <div class="terminal-line"><span class="terminal-prompt">~$</span> what are we making today?</div>
+        <div class="terminal-line" style="color:#a8ff78; font-size:11px;">Anything you like. Where shall we begin?</div>
+        <div class="terminal-dim">─────────────────────</div>
+        <div class="terminal-line"><span class="terminal-prompt">~$</span> <span class="terminal-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE OPEN-TERMINAL — how to find it -->
+  <div class="slide slide-open-terminal">
+    <div class="sot-title">Right then — where do you actually find it?</div>
+    <div class="sot-cols">
+
+      <!-- MAC -->
+      <div class="sot-col">
+        <div class="sot-os">🍎 Mac</div>
+        <div class="sot-instruction">⌘ + Space → type "terminal" → Enter</div>
+        <div class="spotlight-mock">
+          <div class="spotlight-input">
+            <div class="spotlight-icon">🔍</div>
+            <div class="spotlight-text">terminal<span class="spotlight-cursor"></span></div>
+          </div>
+          <div class="spotlight-result">
+            <div class="spotlight-result-icon">🖥️</div>
+            <div class="spotlight-result-text">
+              <strong>Terminal</strong>
+              <span>Applications › Utilities</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sot-divider"></div>
+
+      <!-- WINDOWS -->
+      <div class="sot-col">
+        <div class="sot-os">🪟 Windows</div>
+        <div class="sot-instruction">Windows key → type "powershell" → Enter</div>
+        <div class="win-search-mock">
+          <div class="win-search-bar">
+            <div class="win-search-icon">🔍</div>
+            <div class="win-search-text">powershell</div>
+          </div>
+          <div class="win-search-result">
+            <div>🖥️</div>
+            <div><strong>Windows PowerShell</strong></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="sot-closing">
+      Looks alarming. Considerably less alarming once you're in. Promise.
+    </div>
+  </div>
+
+  <!-- SLIDE INSTALL -->
+  <div class="slide slide-install">
+    <div class="sil-eyebrow">Step 1 — Installation</div>
+    <div class="sil-title">One command. (Easy!)</div>
+    <div class="sil-body">
+      Copy the command below, paste it into your Terminal, press Enter.<br>
+      The computer will do some things. You may breathe normally throughout.
+    </div>
+    <div class="sil-copy-box">
+      <div class="sil-copy-label">Copy this →</div>
+      <code class="sil-copy-cmd" id="installCmd">npm install -g @anthropic-ai/claude-code</code>
+      <button class="sil-copy-btn" onclick="copyInstallCmd(this)">Copy</button>
+    </div>
+    <div class="sil-arrow-note">This is what it looks like in the Terminal ↓</div>
+    <div class="terminal-mock" style="width:560px; max-width:90vw;">
+      <div class="terminal-titlebar">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <div class="terminal-title-text">bash</div>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="terminal-prompt">~$</span> npm install -g @anthropic-ai/claude-code</div>
+        <div class="terminal-line" style="color:#a8ff78; margin-top:6px;">✓ added 1 package in 4s</div>
+        <div class="terminal-line"><span class="terminal-prompt">~$</span> <span class="terminal-cursor"></span></div>
+      </div>
+    </div>
+    <div class="sil-closing">Looks very technical. In practice: copy, paste, Enter. That's genuinely it.</div>
+  </div>
+
+  <!-- SLIDE LAUNCH -->
+  <div class="slide slide-launch">
+    <div class="sil-eyebrow">Step 2 — First Launch</div>
+    <div class="sil-title">claude: how you summon it</div>
+    <div class="sil-body">
+      Once installation is done — type:
+    </div>
+    <div class="sil-cmd-wrap">
+      <span class="sil-prompt">~$</span>
+      <span class="sil-cmd">claude<span class="terminal-cursor" style="margin-left:4px;"></span></span>
+    </div>
+    <div class="sil-body">
+      It will ask you to authenticate.<br>
+      This is exactly like logging into a website —<br>
+      except instead of a blue button, there's a black Enter key.<br>
+      Confirm. Wait a moment.
+    </div>
+    <div class="sil-closing">And that's it. You're in. Considerably less dramatic than advertised.</div>
+  </div>
+
+  <!-- SLIDE 3 — VS Code -->
+  <div class="slide slide-3">
+    <div class="s3-top">
+      <div class="s3-eyebrow">Tool #2 — Entirely optional</div>
+      <div class="s3-title">VS Code: powerful, clever, and perhaps a touch much for a first date.</div>
+    </div>
+    <div class="s3-content">
+      <div class="s3-body">
+        <div class="s3-para">
+          VS Code is a professional code editor —
+          designed for people who want to work with code with more control, more tools, more structure.<br>
+          And, let's be honest, significantly more things on screen at once.
+        </div>
+        <div class="s3-para">
+          If the Terminal feels like speaking directly to your computer,
+          VS Code feels like stepping into a control room.<br>
+          There are panels, sidebars, tabs, colours, extensions,
+          and a brief moment where you think:<br>
+          <em>"Am I working, or am I piloting something?"</em>
+        </div>
+        <div class="s3-para">
+          Think of it as the move from iMovie to Premiere.
+          Not because it's the same thing — but because suddenly there's considerably more power at your disposal,
+          and also a slightly higher chance of sitting in front of it for two minutes
+          pretending you know exactly what you're doing.
+        </div>
+        <div class="s3-closing">
+          It's an excellent tool.<br>
+          You simply don't need to start at the "we're still getting to know each other" stage.<br>
+          This chapter will be here when you're ready.
+        </div>
+      </div>
+      <img src="תמונות/part2_slide3_cockpit.png" class="s3-screenshot" alt="VS Code">
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — THE COMPARISON -->
+  <div class="slide slide-4">
+    <div class="s4-title">So which should I actually use?</div>
+    <div class="s4-sub">Whichever one doesn't make you close the laptop.</div>
+    <div class="s4-cards">
+
+      <div class="s4-card recommended">
+        <div class="s4-badge">Start here</div>
+        <div class="s4-card-icon">🖥️</div>
+        <div class="s4-card-title">Desktop App</div>
+        <div class="s4-card-body">
+          The most approachable place to begin.<br>
+          Clean, simple, clear.<br>
+          Fewer windows, less noise, no sense that you need a qualification just to ask a question.<br><br>
+          If you'd like to start working with Claude without fussing about the environment —<br>
+          <strong>begin here.</strong>
+        </div>
+        <div class="s4-card-tag">Already installed ✓</div>
+      </div>
+
+      <div class="s4-card">
+        <div class="s4-card-icon">⬛</div>
+        <div class="s4-card-title">Terminal</div>
+        <div class="s4-card-body">
+          Worth knowing, even if you don't fall in love with it.<br>
+          It looks stern, but in practice it's simply direct.<br><br>
+          You needn't move in permanently —<br>
+          but it's useful to know it exists, and that one day you might use it without rolling your eyes.
+        </div>
+        <div class="s4-card-tag">Good to know</div>
+      </div>
+
+      <div class="s4-card dimmed">
+        <div class="s4-card-icon">💙</div>
+        <div class="s4-card-title">VS Code</div>
+        <div class="s4-card-body">
+          When what you have is working nicely,<br>
+          and you fancy a bit of an upgrade —<br><br>
+          it'll be there, rather pleased with itself, but genuinely useful.<br>
+          Not now. Not required. Never required.
+        </div>
+        <div class="s4-card-tag">For later</div>
+      </div>
+
+    </div>
+    <div class="s4-closing">
+      There's no correct answer here. There's only whichever option gets you started.<br>
+      Because starting simply beats postponing everything because the software looks like it knows things about you.
+    </div>
+    <img src="תמונות/part2_slide4_trio.png" class="s4-creature" alt="">
+  </div>
+
+  <!-- SLIDE VSCODE-WARNING -->
+  <div class="slide" style="flex-direction:row; align-items:center; justify-content:center; gap:72px; padding:60px 100px 100px;">
+    <div class="s2-text">
+      <div class="s2-optional-note">Feel free to skip this for now, or install it — entirely your call</div>
+      <div class="s2-eyebrow">Before you begin</div>
+      <div class="s2-title">Right, then —<br>let's install VS Code.</div>
+      <div class="s2-body">
+        Spoiler: for some of you it will work immediately.<br>
+        For others, your computer will make a fuss.<br><br>
+        It's not personal.<br>
+        It's just a computer.<br><br>
+        If you get stuck:<br>
+        ask in the group,<br>
+        or faster still — take a screenshot and ask Claude what to do.
+        <br><br>
+        <a href="https://claude.ai" target="_blank" style="color:#c97b63; font-weight:700; text-decoration:none; border-bottom:1px solid #c97b63; padding-bottom:2px;">claude.ai →</a>
+      </div>
+      <div class="s2-closing">
+        An installation problem isn't the end of the road.<br>
+        It's just another question for Claude.
+      </div>
+    </div>
+    <img src="תמונות/part2_install_hope.png" alt="" style="height:300px; width:auto; object-fit:contain; flex-shrink:0; mix-blend-mode:multiply; filter:drop-shadow(0 8px 24px rgba(0,0,0,0.07));">
+  </div>
+
+  <!-- SLIDE VSCODE — what is VS Code -->
+  <div class="slide slide-4" style="flex-direction: row; gap: 72px; padding: 60px 100px 100px;">
+    <div class="s2-text">
+      <div class="s2-eyebrow">Tool #2 — Optional</div>
+      <div class="s2-title">VS Code</div>
+      <div class="s2-body">
+        It's a free piece of software from Microsoft.<br>
+        It lets you work with Claude Code somewhere you can actually see the code —<br>
+        even if right now you're looking at it the way you'd look at a menu in a language you don't speak.<br><br>
+        Which is fine, actually.<br>
+        Because even without understanding every line,<br>
+        you can still see that something's there,<br>
+        where it lives,<br>
+        and when Claude has started going slightly off-piste.
+      </div>
+      <div class="s2-closing">
+        Download from <strong>vscode.com</strong>
+      </div>
+    </div>
+    <img src="תמונות/vs .png" alt="VS Code website" style="height:320px; width:auto; object-fit:contain; border-radius:10px; box-shadow:0 8px 32px rgba(0,0,0,0.12); flex-shrink:0;">
+  </div>
+
+  <!-- SLIDE VSCODE-INTRO — opening a folder -->
+  <div class="slide slide-2" style="flex-direction: row; gap: 72px; padding: 60px 100px 100px;">
+    <div class="s2-text">
+      <div class="s2-eyebrow">First step in VS Code</div>
+      <div class="s2-title">The first thing you do:<br>open a folder.</div>
+      <div class="s2-body">
+        You don't need to understand all of VS Code to get started.<br>
+        You just need to open your project folder.<br><br>
+        That folder tells Claude:<br>
+        this is your territory. We work in here.<br><br>
+        It can only see what's inside,<br>
+        and it only works there.<br>
+        Not on your desktop, not in other folders,<br>
+        and not in anything you didn't intend it to touch.
+      </div>
+      <div class="s2-closing">
+        In short, the folder is how you tell Claude:<br>
+        yes here. not there. thank you very much.
+      </div>
+    </div>
+    <div class="vscode-intro-img-wrap" style="flex-shrink:0;">
+      <img src="תמונות/vscode_welcome_arrow.png" alt="VS Code welcome screen" style="max-height:55vh; max-width:42vw; border-radius:10px; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+    </div>
+  </div>
+
+  <!-- SLIDE EXT-1 -->
+  <div class="slide slide-ext">
+    <div class="ext-title">A few more clicks and Claude is in.</div>
+    <div class="ext-sub">(Stay with us — we're almost there.)</div>
+    <img src="תמונות/1.png" alt="Extensions icon" class="ext-img">
+    <div class="ext-step-text">Click the Extensions icon — the squares on the side. Yes, those.</div>
+  </div>
+
+  <!-- SLIDE EXT-2 -->
+  <div class="slide slide-ext">
+    <img src="תמונות/2.png" alt="Search claude code" class="ext-img">
+    <div class="ext-step-text">Type <em>claude code</em> — exactly like that, no embellishments.</div>
+  </div>
+
+  <!-- SLIDE EXT-3 -->
+  <div class="slide slide-ext">
+    <img src="תמונות/3.png" alt="Install Claude Code" class="ext-img">
+    <div class="ext-step-text">There'll be a few results. Make sure you take the right one — from Anthropic.</div>
+    <div class="ext-note">If a "Trust Publisher" prompt appears — perfectly normal. Click confirm and carry on.</div>
+  </div>
+
+  <!-- SLIDE EXT-4 -->
+  <div class="slide slide-ext">
+    <img src="תמונות/4.png" alt="Claude Code icon" class="ext-img">
+    <div class="ext-step-text">The orange logo appears at the top. That means Claude is in.</div>
+    <div class="ext-note">When you want to open a new conversation with Claude — click that logo.</div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prev()">← prev</button>
+  <span class="counter" id="counter">1 / 4</span>
+  <button onclick="next()">next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+
+  function copyInstallCmd(btn) {
+    const text = document.getElementById('installCmd').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  document.getElementById('counter').textContent = `1 / ${slides.length}`;
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight') next();
+  });
+
+  // Swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+  }, { passive: true });
+</script>
+</body>
+</html>
